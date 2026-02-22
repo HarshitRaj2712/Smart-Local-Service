@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import API from "../api/axios";
 
 const Providers = () => {
@@ -25,32 +26,42 @@ const Providers = () => {
 
       <div className="grid md:grid-cols-3 gap-6">
         {providers.map((provider) => (
-          <div
+          <Link
             key={provider._id}
-            className="bg-white shadow-md rounded-xl p-6"
+            to={`/providers/${provider._id}`}
+            className="block"
           >
-            <img
-              src={provider.idProof}
-              alt="ID Proof"
-              className="w-full h-40 object-cover rounded-md mb-4"
-            />
+            <div className="bg-white shadow-md rounded-xl p-6 hover:shadow-lg transition cursor-pointer">
+              <img
+                src={provider.idProof}
+                alt="ID Proof"
+                className="w-full h-40 object-cover rounded-md mb-4"
+              />
 
-            <h3 className="text-xl font-semibold">
-              {provider.user.name}
-            </h3>
+              <h3 className="text-xl font-semibold">
+                {provider.user.name}
+              </h3>
 
-            <p className="text-gray-600 mt-2">
-              Service: {provider.serviceType}
-            </p>
+              <p className="text-gray-600 mt-2">
+                Service: {provider.serviceType}
+              </p>
 
-            <p className="text-gray-600">
-              Experience: {provider.experience} years
-            </p>
+              <p className="mt-2 text-yellow-500 font-semibold">
+                ⭐ {provider.averageRating?.toFixed(1) || 0}
+                <span className="text-gray-600 text-sm ml-2">
+                  ({provider.totalReviews || 0} reviews)
+                </span>
+              </p>
 
-            <span className="inline-block mt-3 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-              Verified Provider
-            </span>
-          </div>
+              <p className="text-gray-600">
+                Experience: {provider.experience} years
+              </p>
+
+              <span className="inline-block mt-3 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                Verified Provider
+              </span>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

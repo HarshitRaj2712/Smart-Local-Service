@@ -10,6 +10,10 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import ProviderProfileSetup from "./pages/ProviderProfileSetup";
+import Providers from "./pages/Providers";
+import ProviderDetail from "./pages/ProviderDetail";
+import BookingForm from "./pages/BookingForm";
+import UserBookings from "./pages/UserBookings";
 
 const App = () => {
   return (
@@ -17,6 +21,9 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+         <Route path="/providers" element={<Providers />} />
+         <Route path="/providers/:id" element={<ProviderDetail />} />
+         <Route path="/book/:id" element={<BookingForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
@@ -32,7 +39,7 @@ const App = () => {
         />
 
         <Route
-          path="/provider"
+          path="/provider/dashboard"
           element={
             <ProtectedRoute>
               <RoleBasedRoute allowedRoles={["provider"]}>
@@ -61,8 +68,19 @@ const App = () => {
               <ProviderProfileSetup />
             </RoleBasedRoute>
           </ProtectedRoute>
-        }
-      />
+          }
+        />
+        <Route
+          path="/user/bookings"
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["user"]}>
+                <UserBookings />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
       
     </>

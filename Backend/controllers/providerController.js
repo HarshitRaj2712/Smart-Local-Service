@@ -101,3 +101,19 @@ export const getApprovedProviders = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getProviderById = async (req, res) => {
+  try {
+    const provider = await ProviderProfile.findById(req.params.id)
+      .populate("user", "name email");
+
+    if (!provider) {
+      return res.status(404).json({ message: "Provider not found" });
+    }
+
+    res.json(provider);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

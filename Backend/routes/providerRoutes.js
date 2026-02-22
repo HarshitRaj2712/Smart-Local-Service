@@ -3,7 +3,7 @@ import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
 import { createProviderProfile } from "../controllers/providerController.js";
 import { getAllProviders, approveProvider, getApprovedProviders } from "../controllers/providerController.js";
-
+import { getProviderById } from "../controllers/providerController.js";
 const router = express.Router();
 
 router.get(
@@ -12,6 +12,8 @@ router.get(
   authorizeRoles("admin"),
   getAllProviders
 );
+
+router.get("/:id", getProviderById);
 
 router.get("/approved", getApprovedProviders);
 

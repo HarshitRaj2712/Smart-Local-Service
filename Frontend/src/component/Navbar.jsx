@@ -25,6 +25,14 @@ const Navbar = () => {
             Providers
           </Link>
 
+          {role === "provider" && (
+            <Link to="/provider/dashboard">Dashboard</Link>
+          )}
+
+          {role === "user" && (
+            <Link to="/user/bookings">My Bookings</Link>
+          )}
+
           <a href="#how">How It Works</a>
           <a href="#features">Features</a>
           <a href="#contact">Contact</a>
