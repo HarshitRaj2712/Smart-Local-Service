@@ -1,10 +1,27 @@
 import express from "express";
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
-import { createProviderProfile } from "../controllers/providerController.js";
-import { getAllProviders, approveProvider, getApprovedProviders } from "../controllers/providerController.js";
-import { getProviderById } from "../controllers/providerController.js";
+import {
+  createProviderProfile,
+  getAllProviders,
+  approveProvider,
+  getApprovedProviders,
+  getProviderById,
+  getProviderAnalytics,
+} from "../controllers/providerController.js";
+
 const router = express.Router();
+
+// 🔥 STATIC ROUTES FIRST
+
+router.get("/approved", getApprovedProviders);
+
+router.get(
+  "/analytics",
+  protect,
+  authorizeRoles("provider"),
+  getProviderAnalytics
+);
 
 router.get(
   "/all",
@@ -12,10 +29,6 @@ router.get(
   authorizeRoles("admin"),
   getAllProviders
 );
-
-router.get("/:id", getProviderById);
-
-router.get("/approved", getApprovedProviders);
 
 router.put(
   "/approve/:id",
@@ -34,5 +47,8 @@ router.post(
   ]),
   createProviderProfile
 );
+
+// 🔥 DYNAMIC ROUTE LAST
+router.get("/:id", getProviderById);
 
 export default router;

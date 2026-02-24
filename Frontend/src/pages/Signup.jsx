@@ -10,6 +10,9 @@ const Signup = () => {
     email: "",
     password: "",
     role: "user",
+    gender: "",
+    age: "",
+    phone: "",
   });
 
   const handleChange = (e) => {
@@ -23,12 +26,29 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await API.post("/auth/register", formData);
-      alert("Registered successfully");
-      navigate("/login");
-    } catch (error) {
-      alert(error.response?.data?.message || "Error");
-    }
+      const data = new FormData();
+
+      Object.keys(formData).forEach((key) => {
+        data.append(key, formData[key]);
+      });
+
+      await API.post("/auth/register", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+    alert("Registered successfully 🎉");
+    navigate("/login");
+
+  } catch (error) {
+    alert(error.response?.data?.message || "Error");
+  }
+};
+
+  const handleGoogleSignup = () => {
+    window.location.href =
+      "http://localhost:5000/api/auth/google";
   };
 
   return (
@@ -38,7 +58,32 @@ const Signup = () => {
           Create Account
         </h2>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <input
+            type="file"
+            name="profilePic"
+            accept="image/*"
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                profilePic: e.target.files[0],
+              })
+            }
+            className="w-full border px-4 py-2 rounded-lg"
+          />
+
+        {/* Google OAuth Button */}
+        <button
+          onClick={handleGoogleSignup}
+          className="w-full mt-4 border py-2 rounded-lg"
+        >
+          Sign up with Google
+        </button>
+
+        <div className="my-4 text-center text-gray-400">
+          OR
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
 
           <input
             type="text"
@@ -46,6 +91,7 @@ const Signup = () => {
             placeholder="Full Name"
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-lg"
+            required
           />
 
           <input
@@ -54,6 +100,7 @@ const Signup = () => {
             placeholder="Email"
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-lg"
+            required
           />
 
           <input
@@ -62,7 +109,20 @@ const Signup = () => {
             placeholder="Password"
             onChange={handleChange}
             className="w-full border px-4 py-2 rounded-lg"
+            required
           />
+
+          <select
+            name="gender"
+            onChange={handleChange}
+            className="w-full border px-4 py-2 rounded-lg"
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
 
           <select
             name="role"
@@ -72,6 +132,22 @@ const Signup = () => {
             <option value="user">User</option>
             <option value="provider">Provider</option>
           </select>
+
+          <input
+            type="number"
+            name="age"
+            placeholder="Age"
+            onChange={handleChange}
+            className="w-full border px-4 py-2 rounded-lg"
+          />
+
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone (optional)"
+            onChange={handleChange}
+            className="w-full border px-4 py-2 rounded-lg"
+          />
 
           <button
             type="submit"

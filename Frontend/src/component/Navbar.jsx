@@ -29,6 +29,12 @@ const Navbar = () => {
             <Link to="/provider/dashboard">Dashboard</Link>
           )}
 
+          {role === "provider" && (
+            <Link to="/provider/analytics">
+              Analytics
+            </Link>
+          )}
+
           {role === "user" && (
             <Link to="/user/bookings">My Bookings</Link>
           )}

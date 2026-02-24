@@ -17,6 +17,26 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    
+    gender: {
+      type: String,
+      required: true,
+    },
+
+    age: {
+      type: Number,
+      required: true,
+    },
+
+    phone: {
+      type: String,
+      required: false,
+    },
+
+    profilePic: {
+    type: String,
+    default: "",
+  },
 
     role: {
       type: String,

@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+// import passport from "passport";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
@@ -7,6 +8,10 @@ import testRoutes from "./routes/testRoutes.js";
 import providerRoutes from "./routes/providerRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import passport from "./config/passport.js";
+
+
 dotenv.config();
 
 const app = express();
@@ -19,6 +24,8 @@ app.use("/api/test", testRoutes);
 app.use("/api/provider", providerRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use("/api/review", reviewRoutes);
+app.use("/api/admin", adminRoutes);
+app.use(passport.initialize());
 
 // Test Route
 app.get("/", (req, res) => {

@@ -48,6 +48,16 @@ const Login = () => {
         <h2 className="text-2xl font-bold text-center text-gray-800">
           Welcome Back
         </h2>
+        
+        <button
+          type="button"
+          onClick={() =>
+            (window.location.href =
+              "http://localhost:5000/api/auth/google")
+          }
+        >
+          Sign in with Google
+        </button>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input

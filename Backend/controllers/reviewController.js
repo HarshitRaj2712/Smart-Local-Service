@@ -57,6 +57,21 @@ export const createReview = async (req, res) => {
       }
     );
 
+    const provider = await ProviderProfile.findById(booking.provider);
+
+    const completionRate =
+      provider.totalBookings > 0
+        ? provider.completedBookings / provider.totalBookings
+        : 0;
+
+    const ratingScore = provider.averageRating * 20;
+
+    provider.trustScore =
+      ratingScore * 0.6 +
+      completionRate * 100 * 0.4;
+
+    await provider.save();
+
     res.status(201).json(review);
 
   } catch (error) {

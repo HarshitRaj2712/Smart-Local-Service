@@ -14,6 +14,8 @@ import Providers from "./pages/Providers";
 import ProviderDetail from "./pages/ProviderDetail";
 import BookingForm from "./pages/BookingForm";
 import UserBookings from "./pages/UserBookings";
+import ProviderAnalytics from "./pages/ProviderAnalytics";
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 const App = () => {
   return (
@@ -26,6 +28,7 @@ const App = () => {
          <Route path="/book/:id" element={<BookingForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
 
         <Route
           path="/admin"
@@ -33,6 +36,17 @@ const App = () => {
             <ProtectedRoute>
               <RoleBasedRoute allowedRoles={["admin"]}>
                 <AdminDashboard />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/provider/analytics"
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["provider"]}>
+                <ProviderAnalytics />
               </RoleBasedRoute>
             </ProtectedRoute>
           }
