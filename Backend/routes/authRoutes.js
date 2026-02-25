@@ -2,6 +2,11 @@ import express from "express";
 import passport from "passport";
 import upload from "../middleware/uploadMiddleware.js";
 import {
+  forgotPassword,
+  resetPassword,
+  verifyEmail
+} from "../controllers/authController.js";
+import {
   registerUser,
   loginUser,
 } from "../controllers/authController.js";
@@ -14,6 +19,10 @@ router.post(
   upload.single("profilePic"),
   registerUser
 );
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
+router.get("/verify-email/:token", verifyEmail);
 
 router.post("/login", loginUser);
 

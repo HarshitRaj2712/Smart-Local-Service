@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import API from "../api/axios";
 
 const ProviderDashboard = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token, user } = useSelector((state) => state.auth);
   const [bookings, setBookings] = useState([]);
 
   const fetchBookings = async () => {
@@ -34,7 +34,7 @@ const ProviderDashboard = () => {
           },
         }
       );
-      fetchBookings(); // refresh list
+      fetchBookings();
     } catch (error) {
       console.error(error);
     }
@@ -45,6 +45,13 @@ const ProviderDashboard = () => {
       <h2 className="text-3xl font-bold mb-8 text-center">
         Provider Dashboard
       </h2>
+
+      {/* Email Verification Banner */}
+      {!user?.isEmailVerified && (
+        <div className="bg-yellow-100 text-yellow-800 p-3 rounded-lg mb-6 text-center">
+          Please verify your email to unlock full features.
+        </div>
+      )}
 
       {bookings.length === 0 ? (
         <p className="text-center">No bookings yet.</p>

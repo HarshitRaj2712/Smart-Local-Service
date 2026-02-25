@@ -20,12 +20,12 @@ const userSchema = new mongoose.Schema(
     
     gender: {
       type: String,
-      required: true,
+      // required: true,
     },
 
     age: {
       type: Number,
-      required: true,
+      // required: true,
     },
 
     phone: {
@@ -48,7 +48,18 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    isEmailVerified: {
+    type: Boolean,
+    default: false,
   },
+
+  emailVerificationToken: String,
+  emailVerificationExpire: Date,
+
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
+    },
   { timestamps: true }
 );
 

@@ -16,6 +16,8 @@ import BookingForm from "./pages/BookingForm";
 import UserBookings from "./pages/UserBookings";
 import ProviderAnalytics from "./pages/ProviderAnalytics";
 import OAuthSuccess from "./pages/OAuthSuccess";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   return (
@@ -40,6 +42,9 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route
           path="/provider/analytics"
