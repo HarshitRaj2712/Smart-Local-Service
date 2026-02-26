@@ -110,7 +110,7 @@ export const registerUser = async (req, res) => {
 
     await user.save();
 
-    const verifyUrl = `http://localhost:5173/verify-email/${verifyToken}`;
+    const verifyUrl = `https://smart-local-service.vercel.app/verify-email/${verifyToken}`;  //changed for deployment
 
     await transporter.sendMail({
       to: user.email,
@@ -226,7 +226,7 @@ export const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetUrl = `https://smart-local-service.vercel.app/reset-password/${resetToken}`;   //changed for deployment
 
     await transporter.sendMail({
       to: user.email,
