@@ -48,7 +48,7 @@ const Signup = () => {
 
   const handleGoogleSignup = () => {
     window.location.href =
-      "http://localhost:5000/api/auth/google";
+      "https://smart-local-service.onrender.com/api/auth/google";
   };
 
   return (
