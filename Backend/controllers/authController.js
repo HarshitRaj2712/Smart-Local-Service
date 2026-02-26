@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cloudinary from "../config/cloudinary.js";
 import crypto from "crypto";
-
+import { sendEmail } from "../utils/sendEmail.js";
 
 // 🔐 Generate JWT
 const generateToken = (id, role) => {
@@ -106,15 +106,15 @@ export const registerUser = async (req, res) => {
 
     const verifyUrl = `https://smart-local-service.vercel.app/verify-email/${verifyToken}`;  //changed for deployment
 
-    await transporter.sendMail({
-      to: user.email,
-      subject: "Verify your email",
-      html: `
-        <h2>Email Verification</h2>
-        <p>Click below to verify your email:</p>
-        <a href="${verifyUrl}">${verifyUrl}</a>
-      `,
-    });
+    await sendEmail({
+  to: user.email,
+  subject: "Verify your email",
+  html: `
+    <h2>Email Verification</h2>
+    <p>Click below to verify your email:</p>
+    <a href="${verifyUrl}">${verifyUrl}</a>
+  `,
+});
 
   } catch (error) {
     res.status(500).json({ message: error.message });
