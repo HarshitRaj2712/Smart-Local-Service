@@ -228,15 +228,16 @@ export const forgotPassword = async (req, res) => {
 
     const resetUrl = `https://smart-local-service.vercel.app/reset-password/${resetToken}`;   //changed for deployment
 
-    await transporter.sendMail({
-      to: user.email,
-      subject: "Reset Password",
-      html: `
-        <h2>Password Reset</h2>
-        <p>This link expires in 2 minutes.</p>
-        <a href="${resetUrl}">${resetUrl}</a>
-      `,
-    });
+    console.log("Pretending to send email...");
+    // await transporter.sendMail({
+    //   to: user.email,
+    //   subject: "Reset Password",
+    //   html: `
+    //     <h2>Password Reset</h2>
+    //     <p>This link expires in 2 minutes.</p>
+    //     <a href="${resetUrl}">${resetUrl}</a>
+    //   `,
+    // });
 
     res.json({ message: "Reset link sent" });
 
