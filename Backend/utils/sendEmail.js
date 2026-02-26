@@ -6,7 +6,7 @@ export const sendEmail = async ({ to, subject, html }) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          name: "LocalTrust",
+          name: "Local Service",
           email: "panditjee2712@gmail.com", // MUST be verified in Brevo
         },
         to: [{ email: to }],
