@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cloudinary from "../config/cloudinary.js";
 import crypto from "crypto";
-import nodemailer from "nodemailer";
+
 
 // 🔐 Generate JWT
 const generateToken = (id, role) => {
