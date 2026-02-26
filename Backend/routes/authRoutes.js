@@ -38,11 +38,11 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect: "https://smart-local-service.vercel.app/login",  //changed for deployment
   }),
   (req, res) => {
     res.redirect(
-      `http://localhost:5173/oauth-success?token=${req.user.token}`
+      `https://smart-local-service.vercel.app/oauth-success?token=${req.user.token}`  //changed for deployment
     );
   }
 );
