@@ -22,7 +22,8 @@ import ResetPassword from "./pages/ResetPassword";
 const App = () => {
   return (
     <>
-      <Navbar />
+      <Navbar  />
+      <main className="pt-24 md:pt-28 bg-[#FFF0F5]"></main>
       <Routes>
         <Route path="/" element={<Home />} />
          <Route path="/providers" element={<Providers />} />
