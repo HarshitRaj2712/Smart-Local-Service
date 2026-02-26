@@ -1,29 +1,30 @@
-import Brevo from "@getbrevo/brevo";
-
-const apiInstance = new Brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-  Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
-);
+import axios from "axios";
 
 export const sendEmail = async ({ to, subject, html }) => {
   try {
-    const sendSmtpEmail = new Brevo.SendSmtpEmail();
-
-    sendSmtpEmail.subject = subject;
-    sendSmtpEmail.htmlContent = html;
-    sendSmtpEmail.sender = {
-      name: "Smart Local Service",
-      email: "yourverifiedemail@brevo.com", // MUST verify in Brevo
-    };
-    sendSmtpEmail.to = [{ email: to }];
-
-    await apiInstance.sendTransacEmail(sendSmtpEmail);
-
-    console.log("Email sent successfully");
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "LocalTrust",
+          email: "panditjee2712@gmail.com", // MUST be verified in Brevo
+        },
+        to: [{ email: to }],
+        subject,
+        htmlContent: html,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
-    console.error("Brevo error:", error.response?.body || error.message);
+    console.error(
+      "Brevo error:",
+      error.response?.data || error.message
+    );
     throw new Error("Email sending failed");
   }
 };
