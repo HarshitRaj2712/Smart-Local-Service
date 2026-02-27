@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
+
 const ProviderDetail = () => {
   const { id } = useParams();
   const [provider, setProvider] = useState(null);
   const navigate = useNavigate();
-
+  const role = localStorage.getItem("role");
   useEffect(() => {
     const fetchProvider = async () => {
       const { data } = await API.get(`/provider/${id}`);
@@ -51,13 +52,14 @@ const ProviderDetail = () => {
           />
         ))}
       </div>
-
-      <button
-        onClick={() => navigate(`/book/${provider._id}`)}
-        className="mt-8 bg-blue-600 text-white px-6 py-2 rounded-lg"
-        >
-        Book Service
-        </button>
+        {role === "user" && (
+          <button
+            onClick={() => navigate(`/book/${provider._id}`)}
+            className="mt-8 bg-blue-600 text-white px-6 py-2 rounded-lg"
+            >
+            Book Service
+            </button>
+        )}
     </div>
   );
 };
