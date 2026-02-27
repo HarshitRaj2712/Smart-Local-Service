@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
-
+import { jwtDecode } from "jwt-decode";
 
 const ProviderDetail = () => {
   const { id } = useParams();
-  const [provider, setProvider] = useState(null);
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+
+  const [provider, setProvider] = useState(null);
+  const [role, setRole] = useState(null);
+
+  // ✅ get role from token
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const decoded = jwtDecode(token);
+      setRole(decoded.role);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchProvider = async () => {
       const { data } = await API.get(`/provider/${id}`);
@@ -52,14 +63,22 @@ const ProviderDetail = () => {
           />
         ))}
       </div>
-        {role === "user" && (
-          <button
-            onClick={() => navigate(`/book/${provider._id}`)}
-            className="mt-8 bg-blue-600 text-white px-6 py-2 rounded-lg"
-            >
-            Book Service
-            </button>
-        )}
+
+      {!role && (
+        <button onClick={() => navigate("/login")}>
+          Login to Book
+        </button>
+      )}
+
+      {/* ✅ Only users can book */}
+      {role === "user" && (
+        <button
+          onClick={() => navigate(`/book/${provider._id}`)}
+          className="mt-8 bg-blue-600 text-white px-6 py-2 rounded-lg"
+        >
+          Book Service
+        </button>
+      )}
     </div>
   );
 };
