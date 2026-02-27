@@ -16,13 +16,25 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const { data } = await API.post("/auth/login", formData);
-      dispatch(loginSuccess({ user: data.user, token: data.token, role: data.user.role }));
+
+      // ✅ SAVE TOKEN
       localStorage.setItem("token", data.token);
-      navigate(`/${data.user.role}`);
+
+      // ✅ SAVE FULL USER
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
+
+      alert("Login successful");
+
+      navigate("/");
+
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      alert(error.response?.data?.message);
     }
   };
 

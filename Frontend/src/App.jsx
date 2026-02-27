@@ -18,6 +18,7 @@ import ProviderAnalytics from "./pages/ProviderAnalytics";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
 
 const App = () => {
   return (
@@ -42,6 +43,10 @@ const App = () => {
               </RoleBasedRoute>
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/verify-email/:token"
+          element={<VerifyEmail />}
         />
         <Route path="/provider" element={<ProviderDashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

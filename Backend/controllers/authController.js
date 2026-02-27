@@ -87,6 +87,10 @@ export const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        gender: user.gender,
+        age: user.age,
+        createdAt: user.createdAt,
+        isEmailVerified: user.isEmailVerified,
         profilePic: user.profilePic,
       },
     });
@@ -158,6 +162,10 @@ export const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        gender: user.gender,
+        age: user.age,
+        createdAt: user.createdAt,
+        isEmailVerified: user.isEmailVerified,
         profilePic: user.profilePic,
       },
     });
@@ -272,4 +280,50 @@ export const resetPassword = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+
+export const resendVerificationEmail = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user.isEmailVerified) {
+      return res.json({ message: "Email already verified" });
+    }
+
+    const verifyToken = crypto.randomBytes(20).toString("hex");
+
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(verifyToken)
+      .digest("hex");
+
+    user.emailVerificationToken = hashedToken;
+    user.emailVerificationExpire = Date.now() + 10 * 60 * 1000;
+
+    await user.save();
+
+    const verifyUrl =
+      `https://smart-local-service.vercel.app/verify-email/${verifyToken}`;
+
+    await sendEmail({
+      to: user.email,
+      subject: "Verify your email",
+      html: `
+        <h2>Email Verification</h2>
+        <p>Click below to verify:</p>
+        <a href="${verifyUrl}">${verifyUrl}</a>
+      `,
+    });
+
+    res.json({ message: "Verification email sent" });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const getMe = async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+  res.json(user);
 };

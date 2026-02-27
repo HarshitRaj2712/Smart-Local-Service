@@ -1,6 +1,8 @@
 import express from "express";
 import passport from "passport";
 import upload from "../middleware/uploadMiddleware.js";
+import { getMe } from "../controllers/authController.js";
+import { protect } from "../middleware/authMiddleware.js";
 import {
   forgotPassword,
   resetPassword,
@@ -20,9 +22,12 @@ router.post(
   registerUser
 );
 
+router.get("/me", protect, getMe);
+
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
 router.get("/verify-email/:token", verifyEmail);
+
 
 router.post("/login", loginUser);
 
@@ -45,6 +50,11 @@ router.get(
       `https://smart-local-service.vercel.app/oauth-success?token=${req.user.token}`  //changed for deployment
     );
   }
+);
+router.post(
+  "/resend-verification",
+  protect,
+  resendVerificationEmail
 );
 
 export default router;
