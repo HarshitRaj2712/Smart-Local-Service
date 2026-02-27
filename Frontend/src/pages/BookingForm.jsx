@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-const token = localStorage.getItem("token");
 import API from "../api/axios";
 
 const BookingForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth);
+
+  // ✅ get token ONLY from localStorage
+  const token = localStorage.getItem("token");
 
   const [formData, setFormData] = useState({
     serviceDate: "",
@@ -27,7 +27,10 @@ const BookingForm = () => {
     try {
       await API.post(
         "/booking/create",
-        formData,
+        {
+          ...formData,
+          providerId: id, // ⭐ VERY IMPORTANT
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,9 +40,9 @@ const BookingForm = () => {
 
       alert("Booking created successfully 🎉");
       navigate("/");
-
     } catch (error) {
-      alert("Booking failed");
+      console.error(error.response?.data);
+      alert(error.response?.data?.message || "Booking failed");
     }
   };
 
@@ -51,6 +54,7 @@ const BookingForm = () => {
         <input
           type="date"
           name="serviceDate"
+          required
           onChange={handleChange}
           className="w-full border px-4 py-2 rounded-lg"
         />
@@ -58,6 +62,7 @@ const BookingForm = () => {
         <textarea
           name="description"
           placeholder="Describe your issue"
+          required
           onChange={handleChange}
           className="w-full border px-4 py-2 rounded-lg"
         />
