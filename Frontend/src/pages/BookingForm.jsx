@@ -3,15 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
 const BookingForm = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // providerId
   const navigate = useNavigate();
 
-  // ✅ get token ONLY from localStorage
   const token = localStorage.getItem("token");
 
   const [formData, setFormData] = useState({
     serviceDate: "",
     description: "",
+    price: "",
   });
 
   const handleChange = (e) => {
@@ -28,8 +28,8 @@ const BookingForm = () => {
       await API.post(
         "/booking/create",
         {
+          providerId: id, // ✅ VERY IMPORTANT
           ...formData,
-          providerId: id, // ⭐ VERY IMPORTANT
         },
         {
           headers: {
@@ -41,29 +41,41 @@ const BookingForm = () => {
       alert("Booking created successfully 🎉");
       navigate("/");
     } catch (error) {
-      console.error(error.response?.data);
+      console.log(error.response?.data);
       alert(error.response?.data?.message || "Booking failed");
     }
   };
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">Book Service</h2>
+      <h2 className="text-2xl font-bold mb-6">
+        Book Service
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="date"
           name="serviceDate"
-          required
           onChange={handleChange}
+          required
           className="w-full border px-4 py-2 rounded-lg"
         />
 
         <textarea
           name="description"
           placeholder="Describe your issue"
-          required
           onChange={handleChange}
+          required
+          className="w-full border px-4 py-2 rounded-lg"
+        />
+
+        {/* ✅ PRICE FIELD */}
+        <input
+          type="number"
+          name="price"
+          placeholder="Service price"
+          onChange={handleChange}
+          required
           className="w-full border px-4 py-2 rounded-lg"
         />
 
