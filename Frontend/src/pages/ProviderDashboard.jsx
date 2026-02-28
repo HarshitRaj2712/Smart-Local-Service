@@ -7,7 +7,7 @@ import {
   FileText, ShieldAlert, CheckCircle,
   Star, Trophy, Wallet, BellRing
 } from "lucide-react";
-
+import toast from "react-hot-toast";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -38,9 +38,9 @@ const ProviderDashboard = () => {
       }
     );
 
-    alert("Verification email sent 📩");
+    toast.success("Verification email sent 📩");
   } catch {
-    alert("Failed to send email");
+    toast.error("Failed to send email");
   }
 };
 

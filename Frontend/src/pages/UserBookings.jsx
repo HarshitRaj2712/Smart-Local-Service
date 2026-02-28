@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import API from "../api/axios";
+import toast from "react-hot-toast";
 
 const UserBookings = () => {
   const { token } = useSelector((state) => state.auth);
@@ -48,7 +49,7 @@ const UserBookings = () => {
         }
       );
 
-      alert("Review submitted 🎉");
+      toast.success("Review submitted 🎉");
 
       // Reset state
       setSelectedBooking(null);
@@ -59,7 +60,7 @@ const UserBookings = () => {
       fetchBookings();
 
     } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong");
+      toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }

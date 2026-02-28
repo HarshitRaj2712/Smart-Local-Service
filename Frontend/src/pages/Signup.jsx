@@ -5,7 +5,7 @@ import {
   User, Mail, Lock, Phone, Calendar, 
   UserCircle, Camera, ArrowLeft, X 
 } from "lucide-react";
-
+import toast from "react-hot-toast";
 const Signup = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -39,7 +39,7 @@ const Signup = () => {
       });
       navigate("/login");
     } catch (error) {
-      alert(error.response?.data?.message || "Error");
+      toast.error(error.response?.data?.message || "Error");
     }
   };
 

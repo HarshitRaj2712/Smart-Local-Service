@@ -4,7 +4,7 @@ import {
   Settings, LogOut, LayoutDashboard, 
   FileText, ShieldAlert, CheckCircle 
 } from "lucide-react";
-
+import toast from "react-hot-toast";
 const UserDashboard = () => {
   const navigate = useNavigate();
 
@@ -20,9 +20,9 @@ const UserDashboard = () => {
       }
     );
 
-    alert("Verification email sent 📩");
+    toast.success("Verification email sent 📩");
   } catch {
-    alert("Failed to send email");
+    toast.error("Failed to send email");
   }
 };
 

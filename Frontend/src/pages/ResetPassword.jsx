@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { Lock, ShieldCheck, ArrowLeft } from "lucide-react";
-
+import toast from "react-hot-toast";
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const ResetPassword = () => {
 
     // Logic to check if passwords match
     if (formData.password !== formData.confirmPassword) {
-      return alert("Passwords do not match!");
+      return toast.error("Passwords do not match!");
     }
 
     try {
@@ -29,10 +29,10 @@ const ResetPassword = () => {
         password: formData.password,
       });
 
-      alert("Password updated successfully 🎉");
+      toast.success("Password updated successfully 🎉");
       navigate("/login");
     } catch (error) {
-      alert(error.response?.data?.message || "Error updating password");
+      toast.error(error.response?.data?.message || "Error updating password");
     }
   };
 

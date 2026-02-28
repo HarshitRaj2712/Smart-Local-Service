@@ -10,7 +10,7 @@ import {
   CheckCircle,
   ArrowRight
 } from "lucide-react";
-
+import toast from "react-hot-toast";
 const ProviderProfileSetup = () => {
   const { token } = useSelector((state) => state.auth);
 
@@ -62,9 +62,9 @@ const ProviderProfileSetup = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      alert("Profile created successfully 🎉");
+      toast.success("Profile created successfully 🎉");
     } catch (error) {
-      alert(error.response?.data?.message || "Error creating profile");
+      toast.error(error.response?.data?.message || "Error creating profile");
     }
   };
 

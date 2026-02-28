@@ -2,7 +2,7 @@ import { useState } from "react";
 import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { Mail, ArrowLeft, KeyRound } from "lucide-react";
-
+import toast from "react-hot-toast";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -11,9 +11,9 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       await API.post("/auth/forgot-password", { email });
-      alert("Reset link sent to email (valid for 2 minutes)");
+      toast.success("Reset link sent to email (valid for 2 minutes)");
     } catch (error) {
-      alert(error.response?.data?.message || "Error");
+      toast.error(error.response?.data?.message || "Error");
     }
   };
 

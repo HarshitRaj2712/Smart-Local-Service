@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../api/axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../features/auth/authSlice";
+import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, ArrowLeft, X } from "lucide-react";
 
@@ -28,13 +29,13 @@ const Login = () => {
         "user",
         JSON.stringify(data.user)
       );
-
-      alert("Login successful");
+      window.dispatchEvent(new Event("storage"));
+      toast.success("Login successful");
 
       navigate("/");
 
     } catch (error) {
-      alert(error.response?.data?.message);
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 

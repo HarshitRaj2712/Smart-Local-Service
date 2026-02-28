@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
+
 import { 
   Calendar, 
   FileText, 
@@ -9,6 +10,7 @@ import {
   ArrowLeft,
   ChevronRight
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const BookingForm = () => {
   const { id } = useParams(); // providerId
@@ -44,11 +46,11 @@ const BookingForm = () => {
         }
       );
 
-      alert("Booking created successfully 🎉");
+      toast.success("Booking created successfully 🎉");
       navigate("/dashboard"); // Redirecting to user dashboard to see status
     } catch (error) {
       console.log(error.response?.data);
-      alert(error.response?.data?.message || "Booking failed");
+      toast.error(error.response?.data?.message || "Booking failed");
     }
   };
 
