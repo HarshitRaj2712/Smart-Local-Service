@@ -1,48 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
 const VerifyEmail = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const [status, setStatus] = useState("verifying");
 
   useEffect(() => {
-    const verify = async () => {
+    const verifyEmail = async () => {
       try {
-        // ✅ verify email
-        await API.get(`/auth/verify-email/${token}`);
-
-        // ✅ fetch updated user
-        const userRes = await API.get("/auth/me", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+        await API.get(`/auth/verify-email/${token}`, {
+          withCredentials: true,
         });
 
-        // ✅ update local storage
-        localStorage.setItem(
-          "user",
-          JSON.stringify(userRes.data)
-        );
+        setStatus("success");
 
-        alert("Email verified ✅");
+        // update local user instantly
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+          user.isEmailVerified = true;
+          localStorage.setItem("user", JSON.stringify(user));
+        }
 
-        // refresh dashboard state
-        window.location.href = "/user";
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
 
       } catch (err) {
-        alert("Verification failed");
-        navigate("/login");
+        setStatus("failed");
       }
     };
 
-    verify();
-  }, [token]);
+    if (token) verifyEmail();
+  }, [token, navigate]);
 
   return (
-    <h2 className="text-center mt-20">
-      Verifying email...
-    </h2>
+    <div className="min-h-screen flex justify-center items-center">
+      {status === "verifying" && <h2>Verifying email...</h2>}
+      {status === "success" && <h2>✅ Email verified successfully!</h2>}
+      {status === "failed" && <h2>❌ Verification failed or expired.</h2>}
+    </div>
   );
 };
 
