@@ -6,7 +6,8 @@ import { protect } from "../middleware/authMiddleware.js";
 import {
   forgotPassword,
   resetPassword,
-  verifyEmail
+  verifyEmail,
+  resendVerificationEmail
 } from "../controllers/authController.js";
 import {
   registerUser,
