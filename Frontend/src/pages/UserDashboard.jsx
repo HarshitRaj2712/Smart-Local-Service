@@ -4,10 +4,11 @@ import {
   Settings, LogOut, LayoutDashboard, 
   FileText, ShieldAlert, CheckCircle 
 } from "lucide-react";
+import API from "../api/axios";
 import toast from "react-hot-toast";
 const UserDashboard = () => {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
   const resendVerification = async () => {
   try {
     await API.post(
