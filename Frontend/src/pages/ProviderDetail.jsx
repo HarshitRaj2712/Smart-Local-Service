@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { jwtDecode } from "jwt-decode";
-import { 
-  Star, 
-  ShieldCheck, 
-  Briefcase, 
-  History, 
-  ArrowLeft, 
-  CalendarCheck, 
+
+import {
+  Star,
+  ShieldCheck,
+  Briefcase,
+  History,
+  ArrowLeft,
+  CalendarCheck,
   LockKeyhole,
-  Image as ImageIcon
+  Image as ImageIcon,
+  X
 } from "lucide-react";
 
 const ProviderDetail = () => {
@@ -19,15 +21,27 @@ const ProviderDetail = () => {
 
   const [provider, setProvider] = useState(null);
   const [role, setRole] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleBook = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setShowModal(true);
+    } else {
+      navigate(`/book/${provider._id}`);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setRole(decoded.role);
-      } catch (err) {
-        console.error("Token invalid");
+      } catch {
+        console.error("Invalid token");
       }
     }
   }, []);
@@ -37,10 +51,11 @@ const ProviderDetail = () => {
       try {
         const { data } = await API.get(`/provider/${id}`);
         setProvider(data);
-      } catch (err) {
-        console.error("Error fetching provider details");
+      } catch {
+        console.error("Error fetching provider");
       }
     };
+
     fetchProvider();
   }, [id]);
 
@@ -53,145 +68,169 @@ const ProviderDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] pb-20" style={{ fontFamily: "'Poppins', sans-serif" }}>
-      {/* ================= NAVIGATION ================= */}
+    <div className="min-h-screen bg-[#FFF0F5] pb-20">
+
+      {/* LOGIN MODAL */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-3xl shadow-xl max-w-sm w-full text-center relative">
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-400"
+            >
+              <X size={18} />
+            </button>
+
+            <LockKeyhole className="mx-auto mb-4 text-[#007FFF]" size={40} />
+
+            <h2 className="text-xl font-bold mb-2">
+              Login Required
+            </h2>
+
+            <p className="text-gray-500 text-sm mb-6">
+              Please login first to book this provider.
+            </p>
+
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-[#007FFF] text-white px-6 py-2 rounded-full font-bold"
+            >
+              Go to Login
+            </button>
+
+          </div>
+        </div>
+      )}
+
+      {/* PAGE CONTENT */}
       <div className="max-w-6xl mx-auto p-6">
-        <button 
+
+        {/* BACK BUTTON */}
+        <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-500 font-bold text-sm hover:text-[#007FFF] transition-colors mb-6 group"
+          className="flex items-center gap-2 text-gray-500 font-bold text-sm hover:text-[#007FFF] mb-6"
         >
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft size={18} />
           Back to list
         </button>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          
-          {/* ================= LEFT COLUMN: INFO CARD ================= */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white/90 backdrop-blur-2xl border border-white p-8 rounded-[40px] shadow-sm text-center">
-              <div className="relative inline-block mb-4">
-                <div className="absolute -inset-1 bg-gradient-to-tr from-[#007FFF] to-blue-300 rounded-full blur opacity-20"></div>
-                <img
-                  src={provider.user?.profilePic || provider.idProof || "https://via.placeholder.com/150"}
-                  alt="Profile"
-                  className="relative w-32 h-32 rounded-full object-cover border-[6px] border-white shadow-xl mx-auto"
-                />
-              </div>
 
-              <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
-                {provider.user?.name}
-              </h2>
-              <div className="flex items-center justify-center gap-1.5 text-[#007FFF] mt-1 mb-4">
-                <ShieldCheck size={16} />
-                <span className="text-[10px] font-black uppercase tracking-widest">Verified Expert</span>
-              </div>
+          {/* LEFT CARD */}
+          <div className="bg-white p-8 rounded-3xl text-center shadow-sm">
 
-              <div className="grid grid-cols-2 gap-3 py-4 border-t border-gray-50 mt-4">
-                <div className="text-center">
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Rating</p>
-                  <div className="flex items-center justify-center gap-1 text-yellow-500 font-bold">
-                    <Star size={14} fill="currentColor" />
-                    {provider.averageRating?.toFixed(1) || "0.0"}
-                  </div>
-                </div>
-                <div className="text-center border-l border-gray-50">
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Trust</p>
-                  <p className="text-[#007FFF] font-bold">{provider.trustScore?.toFixed(0) || 0}%</p>
-                </div>
-              </div>
+            <img
+              src={
+                provider.user?.profilePic ||
+                provider.idProof ||
+                "https://via.placeholder.com/150"
+              }
+              alt="profile"
+              className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
+            />
 
-              {/* ACTION BUTTON */}
-              <div className="mt-6">
-                {!role ? (
-                  <button 
-                    onClick={() => navigate("/login")}
-                    className="w-full bg-gray-900 text-white py-4 rounded-[22px] font-bold text-sm flex items-center justify-center gap-2 hover:bg-black transition-all shadow-lg shadow-gray-200"
-                  >
-                    <LockKeyhole size={18} /> Login to Book
-                  </button>
-                ) : role === "user" ? (
-                  <button
-                    onClick={() => navigate(`/book/${provider._id}`)}
-                    className="w-full bg-[#007FFF] text-white py-4 rounded-[22px] font-bold text-sm flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-[#007FFF]/30 transition-all active:scale-95"
-                  >
-                    <CalendarCheck size={18} /> Book Now
-                  </button>
-                ) : (
-                  <div className="p-4 bg-gray-50 rounded-2xl text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                    Providers cannot book services
-                  </div>
-                )}
-              </div>
+            <h2 className="text-2xl font-bold">
+              {provider.user?.name}
+            </h2>
+
+            <div className="flex items-center justify-center gap-1 text-[#007FFF] mt-1">
+              <ShieldCheck size={16} />
+              <span className="text-xs font-bold">
+                Verified Expert
+              </span>
             </div>
 
-            {/* EXPERIENCE PILL */}
-            <div className="bg-white/60 border border-white p-6 rounded-[30px] space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-blue-50 text-[#007FFF] rounded-2xl">
-                  <Briefcase size={20} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Service</p>
-                  <p className="text-sm font-bold text-gray-800">{provider.serviceType}</p>
+            <div className="grid grid-cols-2 mt-6 border-t pt-4">
+
+              <div>
+                <p className="text-xs text-gray-400">Rating</p>
+                <div className="flex items-center justify-center gap-1 text-yellow-500 font-bold">
+                  <Star size={14} fill="currentColor" />
+                  {provider.averageRating?.toFixed(1) || "0.0"}
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-purple-50 text-purple-600 rounded-2xl">
-                  <History size={20} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Experience</p>
-                  <p className="text-sm font-bold text-gray-800">{provider.experience} Years Professional</p>
-                </div>
+
+              <div>
+                <p className="text-xs text-gray-400">Trust</p>
+                <p className="text-[#007FFF] font-bold">
+                  {provider.trustScore?.toFixed(0) || 0}%
+                </p>
               </div>
+
+            </div>
+
+            {/* BOOK BUTTON */}
+            <div className="mt-6">
+
+              {!role ? (
+                <button
+                  onClick={handleBook}
+                  className="w-full bg-gray-900 text-white py-3 rounded-xl flex items-center justify-center gap-2"
+                >
+                  <LockKeyhole size={18} />
+                  Login to Book
+                </button>
+              ) : role === "user" ? (
+                <button
+                  onClick={handleBook}
+                  className="w-full bg-[#007FFF] text-white py-3 rounded-xl flex items-center justify-center gap-2"
+                >
+                  <CalendarCheck size={18} />
+                  Book Now
+                </button>
+              ) : (
+                <div className="p-3 text-gray-400 text-sm">
+                  Providers cannot book services
+                </div>
+              )}
+
             </div>
           </div>
 
-          {/* ================= RIGHT COLUMN: BIO & PORTFOLIO ================= */}
+          {/* RIGHT SIDE */}
           <div className="lg:col-span-2 space-y-8">
-            
-            {/* BIO CARD */}
-            <div className="bg-white/80 backdrop-blur-xl border border-white p-8 rounded-[40px] shadow-sm">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <div className="w-1.5 h-6 bg-[#007FFF] rounded-full"></div> 
-                About {provider.user?.name.split(' ')[0]}
+
+            {/* BIO */}
+            <div className="bg-white p-8 rounded-3xl shadow-sm">
+              <h3 className="text-xl font-bold mb-4">
+                About {provider.user?.name}
               </h3>
-              <p className="text-gray-600 leading-relaxed font-medium">
-                {provider.bio || "No bio provided by the professional."}
+
+              <p className="text-gray-600">
+                {provider.bio || "No bio provided"}
               </p>
             </div>
 
-            {/* PORTFOLIO GALLERY */}
-            <div className="space-y-6">
-              <div className="flex items-center justify-between px-2">
-                <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                  <ImageIcon size={20} className="text-[#007FFF]" />
-                  Work Portfolio
-                </h3>
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  {provider.portfolioImages?.length || 0} Projects
-                </span>
-              </div>
+            {/* PORTFOLIO */}
+            <div>
+
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <ImageIcon size={20} />
+                Work Portfolio
+              </h3>
 
               {provider.portfolioImages?.length === 0 ? (
-                <div className="bg-white/40 border-2 border-dashed border-gray-200 rounded-[40px] p-12 text-center text-gray-400 font-bold">
-                  No portfolio images uploaded yet.
+                <div className="border-dashed border-2 p-10 text-center text-gray-400 rounded-3xl">
+                  No portfolio images
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                   {provider.portfolioImages.map((img, index) => (
-                    <div key={index} className="group relative overflow-hidden rounded-[30px] border-4 border-white shadow-sm hover:shadow-xl transition-all duration-500">
-                      <img
-                        src={img}
-                        alt={`Work Sample ${index + 1}`}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
+                    <img
+                      key={index}
+                      src={img}
+                      alt="work"
+                      className="w-full h-64 object-cover rounded-2xl"
+                    />
                   ))}
+
                 </div>
               )}
+
             </div>
+
           </div>
 
         </div>
