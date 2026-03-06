@@ -1,4 +1,28 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginRequiredModal from "./LoginRequiredModal";
+
 const Hero = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleBookService = () => {
+    if (!token) {
+      setShowModal(true);
+    } else {
+      navigate("/providers");
+    }
+  };
+
+  const handleBecomeProvider = () => {
+    if (!token) {
+      setShowModal(true);
+    } else {
+      navigate("/provider/setup");
+    }
+  };
   return (
     <section className="bg-[#FFF0F5] py-10 px-4">
       <div className="max-w-5xl mx-auto">
@@ -20,14 +44,20 @@ const Hero = () => {
 
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
             {/* Button 1: White -> Blue with Sky Blue Border Hover */}
-            <button className="bg-white text-[#007FFF] px-8 py-2.5 rounded-lg font-semibold border-2 border-transparent hover:bg-[#007FFF] hover:text-white hover:border-sky-300 transition-all duration-300">
+            <button onClick={handleBookService} className="bg-white text-[#007FFF] px-8 py-2.5 rounded-lg font-semibold border-2 border-transparent hover:bg-[#007FFF] hover:text-white hover:border-sky-300 transition-all duration-300">
               Book a Service
             </button>
 
             {/* Button 2: Border -> White Hover */}
-            <button className="border-2 border-white text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-white hover:text-[#007FFF] transition-all duration-300">
+            <button onClick={handleBecomeProvider} className="border-2 border-white text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-white hover:text-[#007FFF] transition-all duration-300">
               Become a Provider
             </button>
+
+
+            <LoginRequiredModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+            />
           </div>
 
         </div>
