@@ -59,51 +59,10 @@ const Hero = () => {
             </button>
 
 
-            {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-md z-50 animate-fadeIn">
-
-                  <div className="relative bg-white/90 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl p-10 max-w-sm w-full text-center animate-scaleIn">
-
-                    <button
-                      onClick={() => setShowModal(false)}
-                      className="absolute top-4 right-4 text-gray-400"
-                    >
-                      <X size={18} />
-                    </button>
-
-                    <div className="flex justify-center mb-5">
-                      <div className="p-4 rounded-full bg-blue-50 text-[#007FFF]">
-                        <LockKeyhole size={28} />
-                      </div>
-                    </div>
-
-                    <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
-                      Login Required
-                    </h2>
-
-                    <p className="text-gray-500 text-sm mb-8">
-                      Please login first to continue.
-                    </p>
-
-                    <div className="flex gap-3 justify-center">
-                      <button
-                        onClick={() => setShowModal(false)}
-                        className="px-6 py-2 rounded-full border border-gray-200 text-gray-600"
-                      >
-                        Cancel
-                      </button>
-
-                      <button
-                        onClick={() => navigate("/login")}
-                        className="px-6 py-2 rounded-full bg-[#007FFF] text-white font-bold"
-                      >
-                        Login Now
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-              )}
+            <LoginRequiredModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+            />
           </div>
 
         </div>
