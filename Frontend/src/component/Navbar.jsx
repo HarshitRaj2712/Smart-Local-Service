@@ -72,9 +72,10 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-4 left-0 w-full z-50 px-4">
-      <div className="max-w-5xl mx-auto bg-white/70 backdrop-blur-lg border border-white/40 rounded-full shadow-lg">
+      <div className="max-w-5xl mx-auto relative">
+        <div className="bg-white/70 backdrop-blur-lg border border-white/40 rounded-full shadow-lg">
 
-        <div className="px-6 py-2 flex items-center justify-between">
+          <div className="px-6 py-2 flex items-center justify-between">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
@@ -89,93 +90,113 @@ const Navbar = () => {
           {/* Desktop Links */}
           <div className="hidden md:flex gap-6 text-sm font-semibold text-gray-600">
             <Link to="/providers">Providers</Link>
-            <a href="#how">How It Works</a>
-            <a href="#features">Features</a>
+            <Link to="/how">How It Works</Link>
+            <Link to="/features">Features</Link>
           </div>
 
-          {/* Right Section */}
-          <div className="flex items-center gap-2">
+            {/* Right Section */}
+            <div className="flex items-center gap-2">
 
-            {!isAuthenticated ? (
-              <>
-                <Link
-                  to="/login"
-                  className="text-sm font-bold px-3"
-                >
-                  Sign In
-                </Link>
-
-                <Link
-                  to="/signup"
-                  className="bg-[#007FFF] text-white px-5 py-1.5 rounded-full text-sm font-bold"
-                >
-                  Sign Up
-                </Link>
-              </>
-            ) : (
-              <div className="relative" ref={profileRef}>
-                <button
-                  onClick={() =>
-                    setIsProfileOpen(!isProfileOpen)
-                  }
-                  className="flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-gray-100"
-                >
-                  <div className="w-7 h-7 rounded-full bg-[#007FFF] flex items-center justify-center text-white text-xs font-bold">
-                    {currentUser?.name?.charAt(0) || "U"}
-                  </div>
-
-                  <span className="font-bold text-xs">
-                    {currentUser?.name || "User"}
-                  </span>
-                </button>
-
-                {isProfileOpen && (
-                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl p-2">
-
+              <div className="hidden md:flex items-center gap-2">
+                {!isAuthenticated ? (
+                  <>
                     <Link
-                      to={`/${role}`}
-                      className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl"
-                      onClick={() => setIsProfileOpen(false)}
+                      to="/login"
+                      className="text-sm font-bold px-3"
                     >
-                      <LayoutDashboard size={16} />
-                      Dashboard
+                      Sign In
                     </Link>
 
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-3 w-full p-2 text-red-500 hover:bg-red-50 rounded-xl"
+                    <Link
+                      to="/signup"
+                      className="bg-[#007FFF] text-white px-5 py-1.5 rounded-full text-sm font-bold"
                     >
-                      <LogOut size={16} />
-                      Logout
+                      Sign Up
+                    </Link>
+                  </>
+                ) : (
+                  <div className="relative" ref={profileRef}>
+                    <button
+                      onClick={() =>
+                        setIsProfileOpen(!isProfileOpen)
+                      }
+                      className="flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-gray-100"
+                    >
+                      <div className="w-7 h-7 rounded-full bg-[#007FFF] flex items-center justify-center text-white text-xs font-bold">
+                        {currentUser?.name?.charAt(0) || "U"}
+                      </div>
+
+                      <span className="font-bold text-xs">
+                        {currentUser?.name || "User"}
+                      </span>
                     </button>
+
+                    {isProfileOpen && (
+                      <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl p-2">
+
+                        <Link
+                          to={`/${role}`}
+                          className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl"
+                          onClick={() => setIsProfileOpen(false)}
+                        >
+                          <LayoutDashboard size={16} />
+                          Dashboard
+                        </Link>
+
+                        <button
+                          onClick={handleLogout}
+                          className="flex items-center gap-3 w-full p-2 text-red-500 hover:bg-red-50 rounded-xl"
+                        >
+                          <LogOut size={16} />
+                          Logout
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-            )}
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden"
-              onClick={() =>
-                setIsMenuOpen(!isMenuOpen)
-              }
-            >
-              {isMenuOpen ? <X /> : <Menu />}
-            </button>
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2 rounded-full hover:bg-gray-100"
+                onClick={() =>
+                  setIsMenuOpen(!isMenuOpen)
+                }
+                aria-label="Toggle navigation menu"
+              >
+                {isMenuOpen ? <X /> : <Menu />}
+              </button>
 
+            </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 p-6 space-y-6">
+          <div className="md:hidden mt-3 bg-white/95 backdrop-blur-lg border border-white/70 rounded-3xl shadow-lg p-6 space-y-5">
 
             <Link
               to="/providers"
               onClick={() => setIsMenuOpen(false)}
-              className="flex justify-between font-semibold"
+              className="flex justify-between font-semibold text-gray-700"
             >
               Providers <ChevronRight size={16} />
+            </Link>
+
+            <Link
+              to="/how"
+              onClick={() => setIsMenuOpen(false)}
+              className="flex justify-between font-semibold text-gray-700"
+            >
+              How It Works <ChevronRight size={16} />
+            </Link>
+
+            <Link
+              to="/features"
+              onClick={() => setIsMenuOpen(false)}
+              className="flex justify-between font-semibold text-gray-700"
+            >
+              Features <ChevronRight size={16} />
             </Link>
 
             {!isAuthenticated ? (

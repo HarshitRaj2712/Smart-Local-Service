@@ -4,6 +4,8 @@ import ProtectedRoute from "./component/ProtectedRoute";
 import RoleBasedRoute from "./component/RoleBasedRoute";
 
 import Home from "./pages/Home";
+import HowItWorksPage from "./pages/HowItWorksPage";
+import FeaturesPage from "./pages/FeaturesPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -33,6 +35,8 @@ const App = () => {
       <main className="pt-24 md:pt-28 bg-[#FFF0F5]"></main>
       <Routes>
         <Route path="/" element={<Home />} />
+         <Route path="/how" element={<HowItWorksPage />} />
+         <Route path="/features" element={<FeaturesPage />} />
          <Route path="/providers" element={<Providers />} />
          <Route path="/providers/:id" element={<ProviderDetail />} />
          <Route path="/book/:id" element={<BookingForm />} />
