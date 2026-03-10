@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -24,9 +25,9 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-6">Navigation</h4>
             <ul className="space-y-4 text-sm text-white/80">
-              <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
-              <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/help" className="hover:text-white transition-colors">Help Center</a></li>
+              <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/help-center" className="hover:text-white transition-colors">Help Center</Link></li>
             </ul>
           </div>
 
@@ -34,8 +35,8 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-6">Resources</h4>
             <ul className="space-y-4 text-sm text-white/80">
-              <li><a href="/how-to-find" className="hover:text-white transition-colors">How to Find a Pro</a></li>
-              <li><a href="/how-listing-works" className="hover:text-white transition-colors">How Listing Works</a></li>
+              <li><Link to="/how-to-find-a-pro" className="hover:text-white transition-colors">How to Find a Pro</Link></li>
+              <li><Link to="/provider-verification" className="hover:text-white transition-colors">Provider Verification</Link></li>
             </ul>
           </div>
 
@@ -43,8 +44,8 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-6">Legal</h4>
             <ul className="space-y-4 text-sm text-white/80">
-              <li><a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms and Conditions</Link></li>
             </ul>
           </div>
 

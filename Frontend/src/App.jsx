@@ -19,6 +19,12 @@ import OAuthSuccess from "./pages/OAuthSuccess";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import AboutPage from "./pages/footer-page/AboutPage";
+import HelpCenterPage from "./pages/footer-page/HelpCenterPage";
+import HowToFindAProPage from "./pages/footer-page/HowToFindAProPage";
+import ProviderVerificationPage from "./pages/footer-page/ProviderVerificationPage";
+import PrivacyPolicyPage from "./pages/footer-page/PrivacyPolicyPage";
+import TermsAndConditionsPage from "./pages/footer-page/TermsAndConditionsPage";
 
 const App = () => {
   return (
@@ -51,6 +57,12 @@ const App = () => {
         <Route path="/provider" element={<ProviderDashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/help-center" element={<HelpCenterPage />} />
+        <Route path="/how-to-find-a-pro" element={<HowToFindAProPage />} />
+        <Route path="/provider-verification" element={<ProviderVerificationPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
 
         <Route
           path="/provider/analytics"
