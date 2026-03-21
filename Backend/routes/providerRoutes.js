@@ -3,6 +3,8 @@ import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
 import {
   createProviderProfile,
+  updateProviderProfile,
+  getMyProfile,
   getAllProviders,
   approveProvider,
   getApprovedProviders,
@@ -21,6 +23,13 @@ router.get(
   protect,
   authorizeRoles("provider"),
   getProviderAnalytics
+);
+
+router.get(
+  "/my-profile",
+  protect,
+  authorizeRoles("provider"),
+  getMyProfile
 );
 
 router.get(
@@ -46,6 +55,17 @@ router.post(
     { name: "portfolio", maxCount: 5 },
   ]),
   createProviderProfile
+);
+
+router.put(
+  "/update-profile",
+  protect,
+  authorizeRoles("provider"),
+  upload.fields([
+    { name: "idProof", maxCount: 1 },
+    { name: "portfolio", maxCount: 5 },
+  ]),
+  updateProviderProfile
 );
 
 // 🔥 DYNAMIC ROUTE LAST

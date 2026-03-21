@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../api/axios";
 import { useSelector } from "react-redux";
 import { 
@@ -23,6 +23,48 @@ const ProviderProfileSetup = () => {
   const [idProof, setIdProof] = useState(null);
   const [portfolio, setPortfolio] = useState([]);
   const [previews, setPreviews] = useState({ id: null, portfolio: [] });
+  const [existingProfile, setExistingProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch existing profile on component mount
+  useEffect(() => {
+    const fetchExistingProfile = async () => {
+      try {
+        const response = await API.get("/provider/my-profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.data) {
+          setExistingProfile(response.data);
+          setFormData({
+            serviceType: response.data.serviceType || "",
+            experience: response.data.experience || "",
+            bio: response.data.bio || "",
+          });
+          // Set existing ID proof preview
+          if (response.data.idProof) {
+            setPreviews((prev) => ({
+              ...prev,
+              id: response.data.idProof,
+            }));
+          }
+          // Set existing portfolio previews
+          if (response.data.portfolioImages && response.data.portfolioImages.length > 0) {
+            setPreviews((prev) => ({
+              ...prev,
+              portfolio: response.data.portfolioImages,
+            }));
+          }
+        }
+      } catch (error) {
+        // Profile doesn't exist, which is fine for new users
+        console.log("No existing profile found");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExistingProfile();
+  }, [token]);
 
   const handleChange = (e) => {
     setFormData({
@@ -56,15 +98,20 @@ const ProviderProfileSetup = () => {
     }
 
     try {
-      await API.post("/provider/create-profile", data, {
+      const endpoint = existingProfile ? "/provider/update-profile" : "/provider/create-profile";
+      const method = existingProfile ? "put" : "post";
+      
+      await API[method](endpoint, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success("Profile created successfully 🎉");
+      
+      const message = existingProfile ? "Profile updated successfully 🎉" : "Profile created successfully 🎉";
+      toast.success(message);
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error creating profile");
+      toast.error(error.response?.data?.message || "Error saving profile");
     }
   };
 
@@ -75,7 +122,7 @@ const ProviderProfileSetup = () => {
         {/* Header */}
         <div className="text-center space-y-2 mb-10">
           <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            Setup <span className="text-[#007FFF]">Professional</span> Profile
+            {existingProfile ? "Update" : "Setup"} <span className="text-[#007FFF]">Professional</span> Profile
           </h2>
           <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em]">Build your trust with customers</p>
         </div>
@@ -171,9 +218,10 @@ const ProviderProfileSetup = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="group w-full bg-[#007FFF] text-white py-5 rounded-[22px] font-extrabold text-sm uppercase tracking-widest shadow-xl shadow-[#007FFF]/30 hover:shadow-[#007FFF]/50 hover:-translate-y-1 transition-all flex items-center justify-center gap-3"
+            disabled={loading}
+            className="group w-full bg-[#007FFF] text-white py-5 rounded-[22px] font-extrabold text-sm uppercase tracking-widest shadow-xl shadow-[#007FFF]/30 hover:shadow-[#007FFF]/50 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Create My Profile
+            {loading ? "Loading..." : existingProfile ? "Update My Profile" : "Create My Profile"}
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
 

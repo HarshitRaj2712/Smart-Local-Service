@@ -47,7 +47,7 @@ const BookingForm = () => {
       );
 
       toast.success("Booking created successfully 🎉");
-      navigate("/dashboard"); // Redirecting to user dashboard to see status
+      navigate("/");
     } catch (error) {
       console.log(error.response?.data);
       toast.error(error.response?.data?.message || "Booking failed");
@@ -76,7 +76,7 @@ const BookingForm = () => {
             </p>
           </div>
 
-          <div className="bg-white/50 backdrop-blur-sm p-6 rounded-[32px] border border-white space-y-4">
+          <div className="bg-white/50 backdrop-blur-sm p-6 rounded-4xl border border-white space-y-4">
             <div className="flex items-center gap-3 text-[#007FFF]">
               <ShieldCheck size={20} />
               <span className="text-xs font-black uppercase tracking-widest">Safe & Secure Payment</span>

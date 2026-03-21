@@ -1,11 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { getUser } from "../utils/auth";
+import API from "../api/axios";
+import { getSocket, disconnectSocket } from "../utils/socket";
 import {
   Menu,
   X,
   LayoutDashboard,
   LogOut,
+  Bell,
+  MessageCircle,
   ShieldCheck,
   ChevronRight,
 } from "lucide-react";
@@ -22,6 +26,7 @@ const Navbar = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const profileRef = useRef(null);
 
@@ -39,6 +44,7 @@ const Navbar = () => {
 
   // ✅ Logout
   const handleLogout = () => {
+    disconnectSocket();
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
@@ -59,6 +65,7 @@ const Navbar = () => {
       ) {
         setIsProfileOpen(false);
       }
+
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -69,6 +76,38 @@ const Navbar = () => {
         handleClickOutside
       );
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token || !isAuthenticated) return;
+
+    const fetchNotifications = async () => {
+      try {
+        const { data } = await API.get("/notification/my-notifications", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setUnreadCount(data.unreadCount || 0);
+      } catch {
+        // Intentionally silent to keep navbar non-blocking.
+      }
+    };
+
+    fetchNotifications();
+
+    const socket = getSocket(token);
+    if (!socket) return;
+
+    const handleNewNotification = () => {
+      setUnreadCount((prev) => prev + 1);
+    };
+
+    socket.on("notification:new", handleNewNotification);
+
+    return () => {
+      socket.off("notification:new", handleNewNotification);
+    };
+  }, [isAuthenticated]);
 
   return (
     <nav className="fixed top-4 left-0 w-full z-50 px-4">
@@ -115,44 +154,67 @@ const Navbar = () => {
                     </Link>
                   </>
                 ) : (
-                  <div className="relative" ref={profileRef}>
+                  <>
                     <button
-                      onClick={() =>
-                        setIsProfileOpen(!isProfileOpen)
-                      }
-                      className="flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-gray-100"
+                      onClick={() => navigate("/chats")}
+                      className="relative p-2 rounded-full hover:bg-gray-100"
+                      aria-label="Chats"
                     >
-                      <div className="w-7 h-7 rounded-full bg-[#007FFF] flex items-center justify-center text-white text-xs font-bold">
-                        {currentUser?.name?.charAt(0) || "U"}
-                      </div>
-
-                      <span className="font-bold text-xs">
-                        {currentUser?.name || "User"}
-                      </span>
+                      <MessageCircle size={18} />
                     </button>
 
-                    {isProfileOpen && (
-                      <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl p-2">
+                    <button
+                      onClick={() => navigate("/notifications")}
+                      className="relative p-2 rounded-full hover:bg-gray-100"
+                      aria-label="Notifications"
+                    >
+                      <Bell size={18} />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                          {unreadCount > 9 ? "9+" : unreadCount}
+                        </span>
+                      )}
+                    </button>
 
-                        <Link
-                          to={`/${role}`}
-                          className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl"
-                          onClick={() => setIsProfileOpen(false)}
-                        >
-                          <LayoutDashboard size={16} />
-                          Dashboard
-                        </Link>
+                    <div className="relative" ref={profileRef}>
+                      <button
+                        onClick={() =>
+                          setIsProfileOpen(!isProfileOpen)
+                        }
+                        className="flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-gray-100"
+                      >
+                        <div className="w-7 h-7 rounded-full bg-[#007FFF] flex items-center justify-center text-white text-xs font-bold">
+                          {currentUser?.name?.charAt(0) || "U"}
+                        </div>
 
-                        <button
-                          onClick={handleLogout}
-                          className="flex items-center gap-3 w-full p-2 text-red-500 hover:bg-red-50 rounded-xl"
-                        >
-                          <LogOut size={16} />
-                          Logout
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                        <span className="font-bold text-xs">
+                          {currentUser?.name || "User"}
+                        </span>
+                      </button>
+
+                      {isProfileOpen && (
+                        <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl p-2">
+
+                          <Link
+                            to={`/${role}`}
+                            className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl"
+                            onClick={() => setIsProfileOpen(false)}
+                          >
+                            <LayoutDashboard size={16} />
+                            Dashboard
+                          </Link>
+
+                          <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 w-full p-2 text-red-500 hover:bg-red-50 rounded-xl"
+                          >
+                            <LogOut size={16} />
+                            Logout
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -217,6 +279,31 @@ const Navbar = () => {
               </div>
             ) : (
               <>
+                <Link
+                  to="/chats"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2 font-semibold text-gray-700"
+                >
+                  <MessageCircle size={18} />
+                  Chats
+                </Link>
+
+                <Link
+                  to="/notifications"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-between font-semibold text-gray-700"
+                >
+                  <span className="flex items-center gap-2">
+                    <Bell size={18} />
+                    Notifications
+                  </span>
+                  {unreadCount > 0 && (
+                    <span className="min-w-4.5 h-4.5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                      {unreadCount > 9 ? "9+" : unreadCount}
+                    </span>
+                  )}
+                </Link>
+
                 <Link
                   to={`/${role}`}
                   onClick={() => setIsMenuOpen(false)}

@@ -5,7 +5,7 @@ import {
   Mail,
   Calendar,
   Settings,
-  LogOut,
+  MessageCircle,
   FileText,
   ShieldAlert,
   CheckCircle,
@@ -26,6 +26,7 @@ import {
 } from "chart.js";
 
 import { Pie, Bar } from "react-chartjs-2";
+import { disconnectSocket } from "../utils/socket";
 
 ChartJS.register(
   ArcElement,
@@ -69,6 +70,7 @@ const ProviderDashboard = () => {
 
   /* ================= LOGOUT ================= */
   const handleLogout = () => {
+    disconnectSocket();
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "/login";
@@ -277,6 +279,12 @@ const ProviderDashboard = () => {
 
                 {/* ACTION BUTTONS */}
                 <div className="flex gap-2">
+                  <button
+                    onClick={() => navigate(`/chat/${booking._id}`)}
+                    className="bg-[#007FFF] text-white px-3 py-2 rounded-lg flex items-center gap-1"
+                  >
+                    <MessageCircle size={14} /> Chat
+                  </button>
 
                   {/* Pending */}
                   {booking.status === "pending" && (

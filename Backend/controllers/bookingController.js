@@ -1,6 +1,8 @@
 import Booking from "../models/Booking.js";
 import Review from "../models/Review.js";
 import ProviderProfile from "../models/ProviderProfile.js";
+import Notification from "../models/Notification.js";
+import { getIoInstance } from "../utils/socketInstance.js";
 
 
 // ==========================
@@ -24,6 +26,23 @@ export const createBooking = async (req, res) => {
       price,
       status: "pending",
     });
+
+    const providerProfile = await ProviderProfile.findById(providerId).populate("user", "_id");
+
+    if (providerProfile?.user?._id) {
+      const notification = await Notification.create({
+        user: providerProfile.user._id,
+        type: "booking",
+        title: "New booking request",
+        body: "A user has created a new booking request.",
+        relatedBooking: booking._id,
+      });
+
+      const io = getIoInstance();
+      if (io) {
+        io.to(`user:${String(providerProfile.user._id)}`).emit("notification:new", notification);
+      }
+    }
 
     res.status(201).json(booking);
 
@@ -148,6 +167,19 @@ export const updateBookingStatus = async (req, res) => {
       completionRate * 100 * 0.4;
 
     await provider.save();
+
+    const notification = await Notification.create({
+      user: booking.user,
+      type: "booking",
+      title: "Booking status updated",
+      body: `Your booking status is now ${status}`,
+      relatedBooking: booking._id,
+    });
+
+    const io = getIoInstance();
+    if (io) {
+      io.to(`user:${String(booking.user)}`).emit("notification:new", notification);
+    }
 
     res.json({
       message: "Booking updated successfully",

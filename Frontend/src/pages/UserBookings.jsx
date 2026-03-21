@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import toast from "react-hot-toast";
 
 const UserBookings = () => {
   const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -111,6 +113,13 @@ const UserBookings = () => {
                   Leave Review
                 </button>
               )}
+
+              <button
+                className="mt-3 ml-3 bg-[#007FFF] text-white px-4 py-2 rounded-lg hover:bg-[#0065cc]"
+                onClick={() => navigate(`/chat/${booking._id}`)}
+              >
+                Open Chat
+              </button>
             </div>
           ))}
         </div>

@@ -62,6 +62,83 @@ export const createProviderProfile = async (req, res) => {
   }
 };
 
+export const updateProviderProfile = async (req, res) => {
+  try {
+    const { serviceType, experience, bio } = req.body;
+
+    const idProofFile = req.files?.idProof?.[0];
+    const portfolioFiles = req.files?.portfolio || [];
+
+    const uploadToCloudinary = (fileBuffer) =>
+      new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "provider_uploads" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result.secure_url);
+          }
+        );
+        stream.end(fileBuffer);
+      });
+
+    // Upload new ID proof if provided
+    let idProofUpdate = {};
+    if (idProofFile) {
+      const idProofUrlFinal = await uploadToCloudinary(idProofFile.buffer);
+      idProofUpdate = { idProof: idProofUrlFinal };
+    }
+
+    // Upload new portfolio images if provided
+    let portfolioUpdate = {};
+    if (portfolioFiles.length > 0) {
+      const portfolioUrls = [];
+      for (let file of portfolioFiles) {
+        const url = await uploadToCloudinary(file.buffer);
+        portfolioUrls.push(url);
+      }
+      portfolioUpdate = { portfolioImages: portfolioUrls };
+    }
+
+    // Find existing profile for current user and update it
+    const profile = await ProviderProfile.findOneAndUpdate(
+      { user: req.user._id }, // Find condition
+      {
+        serviceType,
+        experience,
+        bio,
+        ...idProofUpdate,
+        ...portfolioUpdate,
+      },
+      { new: true, runValidators: true } // Return updated doc
+    );
+
+    if (!profile) {
+      return res.status(404).json({ message: "Provider profile not found" });
+    }
+
+    res.json(profile);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getMyProfile = async (req, res) => {
+  try {
+    const profile = await ProviderProfile.findOne({
+      user: req.user._id,
+    }).populate("user", "name email");
+
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    res.json(profile);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const getAllProviders = async (req, res) => {
   try {
     const providers = await ProviderProfile.find()

@@ -16,6 +16,9 @@ import Providers from "./pages/Providers";
 import ProviderDetail from "./pages/ProviderDetail";
 import BookingForm from "./pages/BookingForm";
 import UserBookings from "./pages/UserBookings";
+import ChatRoom from "./pages/ChatRoom";
+import Chats from "./pages/Chats";
+import Notifications from "./pages/Notifications";
 import ProviderAnalytics from "./pages/ProviderAnalytics";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -118,6 +121,37 @@ const App = () => {
               <RoleBasedRoute allowedRoles={["user"]}>
                 <UserBookings />
               </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/chat/:bookingId"
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["user", "provider"]}>
+                <ChatRoom />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/chats"
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["user", "provider"]}>
+                <Chats />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
             </ProtectedRoute>
           }
         />
