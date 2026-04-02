@@ -18,6 +18,9 @@ import {
   Users
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
+const MotionDiv = motion.div;
 
 const stats = [
   { label: "100%", sub: "User Focused", icon: <Users size={20} className="text-[#007FFF]" /> },
@@ -73,7 +76,13 @@ const AboutPage = () => {
         </button>
 
         {/* --- HERO SECTION --- */}
-        <div className="text-center space-y-4">
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center space-y-4"
+        >
           <span className="inline-block px-4 py-1 rounded-full bg-white border border-[#007FFF]/10 text-[#007FFF] text-[10px] font-bold uppercase tracking-[0.2em]">
             About Roomezy
           </span>
@@ -83,7 +92,7 @@ const AboutPage = () => {
           <p className="text-gray-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
             Where modern technology meets communal trust. We make finding local experts simple, safe, and transparent.
           </p>
-        </div>
+        </MotionDiv>
 
         {/* --- MEET THE CREATOR --- */}
         <div className="text-center">
@@ -116,13 +125,18 @@ const AboutPage = () => {
         {/* --- STATS BADGES (THE 4 BOXES) --- */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {stats.map((s, i) => (
-            <div key={i} className="bg-white/80 backdrop-blur-md border border-white p-6 rounded-[24px] shadow-sm text-center hover:shadow-md transition-shadow">
+            <MotionDiv
+              key={i}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="bg-white/80 backdrop-blur-md border border-white p-6 rounded-3xl shadow-sm text-center hover:shadow-md transition-shadow"
+            >
               <div className="bg-[#007FFF]/5 w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-4 italic">
                 {s.icon}
               </div>
               <h4 className="text-lg font-bold text-gray-800">{s.label}</h4>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">{s.sub}</p>
-            </div>
+            </MotionDiv>
           ))}
         </div>
 
@@ -133,16 +147,16 @@ const AboutPage = () => {
              <h2 className="text-3xl font-bold text-gray-800 mt-4 tracking-tight">The Evolution of an Idea</h2>
           </div>
 
-          <div className="space-y-6 max-w-2xl mx-auto relative before:absolute before:left-8 before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
+          <div className="space-y-6 max-w-2xl mx-auto relative before:absolute before:left-8 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100">
             {journeySteps.map((step, idx) => (
               <div key={idx} className="relative pl-16 group">
                 <div className={`absolute left-5 top-2 w-6 h-6 rounded-full border-4 border-white shadow-md ${step.color} z-10 group-hover:scale-110 transition-transform`}></div>
-                <div className="bg-white p-6 rounded-[24px] border border-white shadow-sm hover:shadow-md transition-all">
+                <div className="bg-white p-6 rounded-3xl border border-white shadow-sm hover:shadow-md transition-all">
                   <div className="flex items-center gap-3 mb-2">
                     <span className={`p-2 rounded-lg ${step.color} text-white`}>{step.icon}</span>
                     <div>
                       <h4 className="text-sm font-bold text-gray-800">{step.title}</h4>
-                      <p className="text-[9px] font-bold text-[#007FFF] uppercase tracking-[0.1em]">{step.tag}</p>
+                      <p className="text-[9px] font-bold text-[#007FFF] uppercase tracking-widest">{step.tag}</p>
                     </div>
                   </div>
                   <p className="text-xs text-gray-500 leading-relaxed font-medium">
@@ -167,7 +181,7 @@ const AboutPage = () => {
         </div>
 
         {/* --- CTA --- */}
-        <div className="bg-[#007FFF] p-10 rounded-[32px] text-center shadow-2xl shadow-[#007FFF]/20 relative overflow-hidden group">
+        <div className="bg-[#007FFF] p-10 rounded-4xl text-center shadow-2xl shadow-[#007FFF]/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:rotate-12 transition-transform duration-700">
             <Sparkles size={100} className="text-white" />
           </div>

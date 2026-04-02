@@ -1,5 +1,8 @@
 import React from "react";
 import { ShieldCheck, FileCheck2, BadgeCheck, Star, SearchCheck, BellRing } from "lucide-react";
+import { motion } from "framer-motion";
+
+const MotionDiv = motion.div;
 
 const steps = [
   {
@@ -28,7 +31,13 @@ const ProviderVerificationPage = () => {
   return (
     <section className="min-h-screen bg-[#FFF0F5] px-6 py-20">
       <div className="mx-auto max-w-4xl space-y-8">
-        <div className="text-center">
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center"
+        >
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white shadow-sm text-[#007FFF] mb-4">
             <ShieldCheck size={28} />
           </div>
@@ -36,7 +45,7 @@ const ProviderVerificationPage = () => {
           <p className="mt-3 text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed">
             Trust is at the core of LocalTrust. Our verification process is designed to help users discover reliable professionals with confidence.
           </p>
-        </div>
+        </MotionDiv>
 
         <div className="bg-white rounded-4xl p-8 shadow-sm border border-white/50">
           <h2 className="text-xl font-bold text-gray-800 mb-2">How verification works</h2>
@@ -46,8 +55,10 @@ const ProviderVerificationPage = () => {
 
           <div className="space-y-4">
             {steps.map((step, idx) => (
-              <div
+              <MotionDiv
                 key={step.title}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
                 className="flex items-start gap-4 rounded-2xl border border-gray-100 p-4 hover:border-[#007FFF]/30 transition-colors"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#007FFF]/10 font-bold text-[#007FFF]">
@@ -60,7 +71,7 @@ const ProviderVerificationPage = () => {
                   </div>
                   <p className="mt-1 text-xs md:text-sm text-gray-500 leading-relaxed">{step.desc}</p>
                 </div>
-              </div>
+              </MotionDiv>
             ))}
           </div>
         </div>

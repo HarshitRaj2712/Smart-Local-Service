@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { 
   Search, 
   HelpCircle, 
@@ -14,6 +15,9 @@ import {
   CreditCard,
   UserPlus
 } from "lucide-react";
+
+const MotionSection = motion.section;
+const MotionDiv = motion.div;
 
 const HelpCenterPage = () => {
   const [activeCategory, setActiveCategory] = useState("Booking");
@@ -144,7 +148,13 @@ const HelpCenterPage = () => {
   return (
     <div className="min-h-screen bg-[#FFF0F5] ">
       {/* --- HEADER SECTION --- */}
-      <section className="pt-20 pb-12 px-6 text-center">
+      <MotionSection
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="pt-20 pb-12 px-6 text-center"
+      >
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white shadow-sm mb-4 text-[#007FFF]">
           <HelpCircle size={28} />
         </div>
@@ -155,7 +165,7 @@ const HelpCenterPage = () => {
           Your guide to finding, booking, and managing local services with confidence. 
           Explore guides, FAQs, and connect with our support team.
         </p>
-      </section>
+      </MotionSection>
 
       <div className="max-w-4xl mx-auto px-6 space-y-10 pb-24">
         
@@ -212,7 +222,12 @@ const HelpCenterPage = () => {
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-50 last:border-0 pb-4 last:pb-0">
+              <MotionDiv
+                key={index}
+                whileHover={{ x: 2 }}
+                transition={{ duration: 0.2 }}
+                className="border-b border-gray-50 last:border-0 pb-4 last:pb-0"
+              >
                 <button 
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between py-2 text-left group"
@@ -225,7 +240,7 @@ const HelpCenterPage = () => {
                     {faq.a}
                   </div>
                 )}
-              </div>
+              </MotionDiv>
             ))}
           </div>
         </div>
@@ -260,7 +275,11 @@ const HelpCenterPage = () => {
 
 /* --- Helper Components --- */
 const QuickActionCard = ({ icon, title, desc }) => (
-  <div className="bg-white p-6 rounded-[28px] border border-white shadow-sm hover:shadow-md transition-all flex items-center gap-5 group cursor-pointer">
+  <MotionDiv
+    whileHover={{ y: -3 }}
+    transition={{ duration: 0.2 }}
+    className="bg-white p-6 rounded-[28px] border border-white shadow-sm hover:shadow-md transition-all flex items-center gap-5 group cursor-pointer"
+  >
     <div className="p-4 bg-[#FFF0F5] rounded-2xl group-hover:bg-[#007FFF]/10 transition-colors">
       {icon}
     </div>
@@ -268,15 +287,19 @@ const QuickActionCard = ({ icon, title, desc }) => (
       <h3 className="text-sm font-bold text-gray-800">{title}</h3>
       <p className="text-[11px] text-gray-400 font-medium mt-0.5">{desc}</p>
     </div>
-  </div>
+  </MotionDiv>
 );
 
 const ContactCard = ({ icon, title, value }) => (
-  <div className="bg-white p-6 rounded-[28px] border border-white shadow-sm text-center space-y-2 hover:-translate-y-1 transition-transform">
+  <MotionDiv
+    whileHover={{ y: -4 }}
+    transition={{ duration: 0.2 }}
+    className="bg-white p-6 rounded-[28px] border border-white shadow-sm text-center space-y-2 hover:-translate-y-1 transition-transform"
+  >
     <div className="text-[#007FFF] flex justify-center">{icon}</div>
     <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest">{title}</h3>
     <p className="text-[11px] font-bold text-[#007FFF]">{value}</p>
-  </div>
+  </MotionDiv>
 );
 
 export default HelpCenterPage;

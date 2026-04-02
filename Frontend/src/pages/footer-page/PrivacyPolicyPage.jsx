@@ -1,4 +1,5 @@
 import { LockKeyhole, Database, ShieldCheck, Mail } from "lucide-react";
+import { motion } from "framer-motion";
 
 const sections = [
   {
@@ -37,16 +38,27 @@ const PrivacyPolicyPage = () => {
   return (
     <section className="min-h-screen bg-[#FFF0F5] px-6 py-20">
       <div className="mx-auto max-w-4xl space-y-8">
-        <div className="rounded-3xl bg-white p-8 shadow-sm border border-white/70">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="rounded-3xl bg-white p-8 shadow-sm border border-white/70"
+        >
           <h1 className="text-3xl font-bold text-gray-900">Privacy Policy</h1>
           <p className="mt-4 text-sm text-gray-600 leading-relaxed">
             This policy explains how LocalTrust collects, uses, and protects your data when you use our services.
           </p>
           <p className="mt-2 text-xs text-gray-500">Last updated: March 10, 2026</p>
-        </div>
+        </motion.div>
 
         {sections.map((section) => (
-          <div key={section.title} className="rounded-3xl bg-white p-8 shadow-sm border border-white/70">
+          <motion.div
+            key={section.title}
+            whileHover={{ y: -2 }}
+            transition={{ duration: 0.2 }}
+            className="rounded-3xl bg-white p-8 shadow-sm border border-white/70"
+          >
             <div className="flex items-center gap-2 mb-4">
               {section.icon}
               <h2 className="text-lg font-bold text-gray-800">{section.title}</h2>
@@ -56,7 +68,7 @@ const PrivacyPolicyPage = () => {
                 <li key={point}>{point}</li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         ))}
 
         <div className="rounded-3xl bg-white p-8 shadow-sm border border-white/70">

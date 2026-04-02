@@ -1,4 +1,7 @@
 import { CheckCircle2, Search, UserCheck, CalendarCheck2, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
+
+const MotionDiv = motion.div;
 
 const steps = [
   {
@@ -34,18 +37,29 @@ const HowToFindAProPage = () => {
   return (
     <section className="min-h-screen bg-[#FFF0F5] px-6 py-20">
       <div className="mx-auto max-w-4xl space-y-8">
-        <div className="rounded-3xl bg-white p-8 shadow-sm border border-white/70">
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="rounded-3xl bg-white p-8 shadow-sm border border-white/70"
+        >
           <h1 className="text-3xl font-bold text-gray-900">How to Find and Book a Pro</h1>
           <p className="mt-4 text-sm text-gray-600 leading-relaxed">
             LocalTrust is built to make service discovery simple and safe. Follow this flow to find the right professional quickly.
           </p>
-        </div>
+        </MotionDiv>
 
         <div className="rounded-3xl bg-white p-8 shadow-sm border border-white/70">
           <h2 className="text-xl font-bold text-gray-800 mb-6">Step-by-step process</h2>
           <div className="space-y-4">
             {steps.map((step, index) => (
-              <div key={step.title} className="flex gap-4 rounded-2xl border border-gray-100 p-4">
+              <MotionDiv
+                key={step.title}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+                className="flex gap-4 rounded-2xl border border-gray-100 p-4"
+              >
                 <div className="h-9 w-9 rounded-lg bg-[#007FFF]/10 flex items-center justify-center font-bold text-[#007FFF]">
                   {index + 1}
                 </div>
@@ -56,7 +70,7 @@ const HowToFindAProPage = () => {
                   </div>
                   <p className="mt-1 text-xs md:text-sm text-gray-500 leading-relaxed">{step.text}</p>
                 </div>
-              </div>
+              </MotionDiv>
             ))}
           </div>
         </div>
