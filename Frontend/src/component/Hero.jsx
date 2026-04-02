@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRequiredModal from "./LoginRequiredModal";
 import { LockKeyhole, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -33,21 +34,44 @@ const Hero = () => {
       <div className="max-w-5xl mx-auto">
         
         {/* Hero Box: Maintained Blue Theme */}
-        <div className="bg-[#007FFF] rounded-xl shadow-lg px-6 py-12 md:py-16 text-center text-white relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="bg-[#007FFF] rounded-xl shadow-lg px-6 py-12 md:py-16 text-center text-white relative overflow-hidden"
+        >
 
           {/* High-Visibility Corner Shapes: Increased opacity to 20% for a stronger look */}
-          <div className="absolute top-0 right-0 w-48 h-48 bg-white/20 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/20 rounded-full translate-y-12 -translate-x-12"></div>
+          <motion.div
+            animate={{ y: [-3, 3, -3] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 right-0 w-48 h-48 bg-white/20 rounded-full -translate-y-16 translate-x-16"
+          ></motion.div>
+          <motion.div
+            animate={{ y: [3, -3, 3] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-0 left-0 w-40 h-40 bg-white/20 rounded-full translate-y-12 -translate-x-12"
+          ></motion.div>
 
           {/* Main Heading - Original Text */}
-          <h1 className="text-2xl md:text-4xl font-bold leading-tight relative z-10">
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12, duration: 0.6, ease: "easeOut" }}
+            className="text-2xl md:text-4xl font-bold leading-tight relative z-10"
+          >
             Find Trusted Local Professionals <br />
             <span className="underline underline-offset-8 decoration-white/30">
               With Verified Trust Score
             </span>
-          </h1>
+          </motion.h1>
 
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.24, duration: 0.6, ease: "easeOut" }}
+            className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10"
+          >
             {/* Button 1: White -> Blue with Sky Blue Border Hover */}
             <button onClick={handleBookService} className="bg-white text-[#007FFF] px-8 py-2.5 rounded-lg font-semibold border-2 border-transparent hover:bg-[#007FFF] hover:text-white hover:border-sky-300 transition-all duration-300">
               Book a Service
@@ -63,9 +87,9 @@ const Hero = () => {
               isOpen={showModal}
               onClose={() => setShowModal(false)}
             />
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
       </div>
     </section>
   );

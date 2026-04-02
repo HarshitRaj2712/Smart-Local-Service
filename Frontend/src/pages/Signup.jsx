@@ -6,6 +6,7 @@ import {
   UserCircle, Camera, ArrowLeft, X 
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 const Signup = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -44,9 +45,15 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFF0F5] py-6 px-4">
-      {/* Max-width reduced to md (28rem) and padding tightened */}
-      <div className="relative bg-white/75 backdrop-blur-xl border border-white/50 p-6 rounded-[28px] shadow-xl w-full max-w-md animate-in fade-in zoom-in duration-300">
+    <div className="fixed inset-0 bg-[#FFF0F5] overflow-hidden">
+      <div className="min-h-full flex items-center justify-center px-4 py-6">
+        {/* Keep card centered while allowing scroll on very small screens */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative mt-10 md:mt-12 bg-white/75 backdrop-blur-xl border border-white/50 p-6 rounded-[28px] shadow-xl w-full max-w-md"
+        >
         
         <button onClick={() => navigate("/")} className="absolute top-5 right-5 text-gray-400 hover:text-gray-600">
           <X size={18} />
@@ -133,6 +140,7 @@ const Signup = () => {
             <ArrowLeft size={12} /> Back to Home
           </button>
         </div>
+        </motion.div>
       </div>
 
       <style>{`

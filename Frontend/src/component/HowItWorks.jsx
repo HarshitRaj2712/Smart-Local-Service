@@ -1,13 +1,21 @@
+import { motion } from "framer-motion";
+
 const HowItWorks = () => {
   return (
     <section id="how" className="py-20 bg-[#FFF0F5]">
       <div className="max-w-6xl mx-auto px-6 text-center">
         
         {/* Section Heading with Theme Color Underline */}
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block">
+        <motion.h2
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
+          className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block"
+        >
           How It Works
           <span className="block h-1.5 w-12 bg-[#007FFF] mx-auto mt-2 rounded-full"></span>
-        </h2>
+        </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8 mt-16">
           
