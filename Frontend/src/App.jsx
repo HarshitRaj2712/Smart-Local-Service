@@ -37,7 +37,7 @@ const App = () => {
     <>
       <Navbar  />
       <ScrollToTop />
-      <main className="pt-24 md:pt-28 bg-[#FFF0F5]"></main>
+      <main className="pt-24 md:pt-28 bg-[#FFF0F5] min-h-screen">
       <Routes>
         <Route path="/" element={<Home />} />
          <Route path="/how" element={<HowItWorksPage />} />
@@ -159,6 +159,7 @@ const App = () => {
         />
 
       </Routes>
+      </main>
       
     </>
   );
