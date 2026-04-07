@@ -11,6 +11,8 @@ import {
   Bell,
   MessageCircle,
   ShieldCheck,
+  Sun,
+  Moon,
   ChevronRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -27,6 +29,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isDarkSymbol, setIsDarkSymbol] = useState(false);
 
   const profileRef = useRef(null);
 
@@ -137,6 +140,15 @@ const Navbar = () => {
             <div className="flex items-center gap-2">
 
               <div className="hidden md:flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsDarkSymbol((prev) => !prev)}
+                  className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-2 py-1 text-gray-500 hover:bg-gray-50"
+                  aria-label={isDarkSymbol ? "Switch to light symbol" : "Switch to dark symbol"}
+                >
+                  {isDarkSymbol ? <Moon size={16} /> : <Sun size={16} />}
+                </button>
+
                 {!isAuthenticated ? (
                   <>
                     <Link
