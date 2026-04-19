@@ -1,6 +1,6 @@
 # LocalTrust 🏠 🛠️
 
-**LocalTrust** is a premium full-stack service marketplace that bridges the gap between household needs and verified local professionals. Whether it's an emergency plumbing fix or a routine electrical check, our platform ensures a secure, transparent, and role-based ecosystem for users and providers alike.
+**LocalTrust** is a premium full-stack service marketplace that bridges the gap between household needs and verified local professionals. Whether it's an emergency plumbing fix or a routine electrical check, our platform ensures a secure, transparent, and role-based ecosystem for users and providers alike
 
 ---
 
