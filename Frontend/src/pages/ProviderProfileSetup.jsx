@@ -101,12 +101,29 @@ const ProviderProfileSetup = () => {
       const endpoint = existingProfile ? "/provider/update-profile" : "/provider/create-profile";
       const method = existingProfile ? "put" : "post";
       
-      await API[method](endpoint, data, {
+      const response = await API[method](endpoint, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
+
+      if (response?.data) {
+        setExistingProfile(response.data);
+        setFormData({
+          serviceType: response.data.serviceType || "",
+          experience: response.data.experience || "",
+          bio: response.data.bio || "",
+        });
+
+        setPreviews((prev) => ({
+          id: response.data.idProof || prev.id,
+          portfolio:
+            response.data.portfolioImages?.length > 0
+              ? response.data.portfolioImages
+              : prev.portfolio,
+        }));
+      }
       
       const message = existingProfile ? "Profile updated successfully 🎉" : "Profile created successfully 🎉";
       toast.success(message);
@@ -140,6 +157,7 @@ const ProviderProfileSetup = () => {
                 name="serviceType"
                 placeholder="Electrician, Plumber..."
                 onChange={handleChange}
+                value={formData.serviceType}
                 className="w-full bg-[#F8FAFC] border-none text-sm font-bold p-4 rounded-2xl focus:ring-2 focus:ring-[#007FFF] transition-all"
               />
             </div>
@@ -153,6 +171,7 @@ const ProviderProfileSetup = () => {
                 name="experience"
                 placeholder="Ex: 5"
                 onChange={handleChange}
+                value={formData.experience}
                 className="w-full bg-[#F8FAFC] border-none text-sm font-bold p-4 rounded-2xl focus:ring-2 focus:ring-[#007FFF] transition-all"
               />
             </div>
@@ -167,6 +186,7 @@ const ProviderProfileSetup = () => {
               name="bio"
               placeholder="Tell customers why they should trust your work..."
               onChange={handleChange}
+              value={formData.bio}
               rows="3"
               className="w-full bg-[#F8FAFC] border-none text-sm font-bold p-4 rounded-2xl focus:ring-2 focus:ring-[#007FFF] transition-all"
             />

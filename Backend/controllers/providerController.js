@@ -46,6 +46,26 @@ export const createProviderProfile = async (req, res) => {
       portfolioUrls.push(url);
     }
 
+    // Never create duplicate profiles for the same provider.
+    const existingProfile = await ProviderProfile.findOne({ user: req.user._id });
+
+    if (existingProfile) {
+      existingProfile.serviceType = serviceType;
+      existingProfile.experience = experience;
+      existingProfile.bio = bio;
+
+      if (idProofUrlFinal) {
+        existingProfile.idProof = idProofUrlFinal;
+      }
+
+      if (portfolioUrls.length > 0) {
+        existingProfile.portfolioImages = portfolioUrls;
+      }
+
+      const updatedProfile = await existingProfile.save();
+      return res.json(updatedProfile);
+    }
+
     const profile = await ProviderProfile.create({
       user: req.user._id,
       serviceType,
