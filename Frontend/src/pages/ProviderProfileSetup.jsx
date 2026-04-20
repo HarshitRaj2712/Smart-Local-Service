@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import API from "../api/axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { 
   Briefcase, 
   History, 
@@ -13,6 +14,7 @@ import {
 import toast from "react-hot-toast";
 const ProviderProfileSetup = () => {
   const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     serviceType: "",
@@ -25,6 +27,17 @@ const ProviderProfileSetup = () => {
   const [previews, setPreviews] = useState({ id: null, portfolio: [] });
   const [existingProfile, setExistingProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const getDashboardRouteByRole = () => {
+    const storedUser = localStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
+    if (user?.role === "admin") return "/admin";
+    if (user?.role === "provider") return "/provider/dashboard";
+    if (user?.role === "user") return "/user";
+
+    return "/";
+  };
 
   // Fetch existing profile on component mount
   useEffect(() => {
@@ -127,6 +140,7 @@ const ProviderProfileSetup = () => {
       
       const message = existingProfile ? "Profile updated successfully 🎉" : "Profile created successfully 🎉";
       toast.success(message);
+      navigate(getDashboardRouteByRole());
     } catch (error) {
       toast.error(error.response?.data?.message || "Error saving profile");
     }
