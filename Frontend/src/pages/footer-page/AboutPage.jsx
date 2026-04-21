@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
   Compass, 
   Lightbulb, 
@@ -15,7 +15,14 @@ import {
   ShieldCheck,
   Zap,
   TrendingUp,
-  Users
+  Users,
+  Server,
+  Database,
+  Cloud,
+  GitBranch,
+  Rocket,
+  Layers,
+  Lock
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -60,8 +67,76 @@ const journeySteps = [
   },
 ];
 
+const techStack = [
+  {
+    name: "React",
+    role: "Frontend",
+    description: "Builds responsive, component-driven experiences with smooth UI updates.",
+    icon: <Code2 size={18} />,
+    accent: "from-sky-500 to-cyan-400",
+    glow: "shadow-sky-200/70"
+  },
+  {
+    name: "Redux",
+    role: "State Layer",
+    description: "Keeps auth, bookings, and notifications predictable across the app.",
+    icon: <Layers size={18} />,
+    accent: "from-indigo-500 to-blue-500",
+    glow: "shadow-indigo-200/70"
+  },
+  {
+    name: "Node.js",
+    role: "Runtime",
+    description: "Powers performant backend APIs and real-time flows for chat and updates.",
+    icon: <Server size={18} />,
+    accent: "from-emerald-500 to-teal-400",
+    glow: "shadow-emerald-200/70"
+  },
+  {
+    name: "Express",
+    role: "API Engine",
+    description: "Delivers secure routing, middleware layers, and clean service endpoints.",
+    icon: <GitBranch size={18} />,
+    accent: "from-orange-500 to-amber-400",
+    glow: "shadow-orange-200/70"
+  },
+  {
+    name: "MongoDB",
+    role: "Database",
+    description: "Stores users, providers, bookings, and reviews with flexible schemas.",
+    icon: <Database size={18} />,
+    accent: "from-lime-500 to-green-400",
+    glow: "shadow-lime-200/70"
+  },
+  {
+    name: "Cloudinary",
+    role: "Media CDN",
+    description: "Handles profile images and uploads with optimized cloud delivery.",
+    icon: <Cloud size={18} />,
+    accent: "from-blue-500 to-sky-400",
+    glow: "shadow-blue-200/70"
+  },
+  {
+    name: "JWT Auth",
+    role: "Security",
+    description: "Protects sessions and role-based routes with secure token auth.",
+    icon: <Lock size={18} />,
+    accent: "from-rose-500 to-pink-400",
+    glow: "shadow-rose-200/70"
+  },
+  {
+    name: "Socket Layer",
+    role: "Real-Time",
+    description: "Supports instant chat and live notification events for users.",
+    icon: <Rocket size={18} />,
+    accent: "from-violet-500 to-fuchsia-400",
+    glow: "shadow-violet-200/70"
+  },
+];
+
 const AboutPage = () => {
   const navigate = useNavigate();
+  const [activeTech, setActiveTech] = useState(techStack[0]);
 
   return (
     <div className="min-h-screen bg-[#FFF0F5] py-12 px-4 ">
@@ -169,14 +244,81 @@ const AboutPage = () => {
         </div>
 
         {/* --- TECH STACK --- */}
-        <div className="bg-white/80 backdrop-blur-md border border-white p-8 rounded-[28px] shadow-sm text-center">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-8">Modern Technology Stack</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {["React", "Node.js", "Express", "MongoDB", "Tailwind", "Redux", "Cloudinary", "JWT Auth"].map(t => (
-              <div key={t} className="py-3 bg-white border border-gray-100 rounded-xl text-[11px] font-bold text-gray-600 shadow-sm hover:border-[#007FFF]/30 transition-colors">
-                {t}
+        <div className="relative overflow-hidden bg-white/85 backdrop-blur-md border border-white p-6 md:p-8 rounded-[30px] shadow-sm">
+          <div className="absolute -top-20 -right-12 w-52 h-52 rounded-full bg-[#007FFF]/10 blur-3xl" />
+          <div className="absolute -bottom-20 -left-12 w-48 h-48 rounded-full bg-pink-300/15 blur-3xl" />
+
+          <div className="relative z-10">
+            <div className="flex items-center justify-between gap-4 mb-7">
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-[0.3em]">Modern Technology Stack</h2>
+              <span className="text-[10px] font-bold text-[#007FFF] uppercase tracking-[0.2em] bg-[#007FFF]/10 px-3 py-1 rounded-full">Interactive</span>
+            </div>
+
+            <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-5 items-start">
+              <div className="grid grid-cols-2 gap-3">
+                {techStack.map((tech) => {
+                  const isActive = activeTech.name === tech.name;
+
+                  return (
+                    <MotionDiv
+                      key={tech.name}
+                      whileHover={{ y: -4, scale: 1.01 }}
+                      transition={{ duration: 0.18 }}
+                      onHoverStart={() => setActiveTech(tech)}
+                      onFocus={() => setActiveTech(tech)}
+                      tabIndex={0}
+                      className={`group cursor-pointer rounded-2xl border p-4 bg-white/90 transition-all ${
+                        isActive
+                          ? "border-[#007FFF]/40 shadow-lg"
+                          : "border-gray-100 hover:border-[#007FFF]/25"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`w-9 h-9 rounded-xl bg-linear-to-br ${tech.accent} text-white flex items-center justify-center shadow ${tech.glow}`}>
+                          {tech.icon}
+                        </div>
+                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">{tech.role}</span>
+                      </div>
+                      <h3 className="text-sm font-bold text-gray-800 group-hover:text-[#007FFF] transition-colors">{tech.name}</h3>
+                    </MotionDiv>
+                  );
+                })}
               </div>
-            ))}
+
+              <MotionDiv
+                key={activeTech.name}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="rounded-3xl border border-[#007FFF]/20 bg-linear-to-br from-white to-[#007FFF]/5 p-6 shadow-md"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-11 h-11 rounded-2xl bg-linear-to-br ${activeTech.accent} text-white flex items-center justify-center shadow ${activeTech.glow}`}>
+                    {activeTech.icon}
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-[#007FFF] uppercase tracking-[0.2em]">{activeTech.role}</p>
+                    <h3 className="text-xl font-bold text-gray-800 tracking-tight">{activeTech.name}</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 leading-relaxed font-medium">{activeTech.description}</p>
+
+                <div className="mt-6">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2">
+                    <span>Impact on Product</span>
+                    <span>High</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+                    <MotionDiv
+                      initial={{ width: 0 }}
+                      animate={{ width: "88%" }}
+                      transition={{ duration: 0.45, ease: "easeOut" }}
+                      className={`h-full rounded-full bg-linear-to-r ${activeTech.accent}`}
+                    />
+                  </div>
+                </div>
+              </MotionDiv>
+            </div>
           </div>
         </div>
 
