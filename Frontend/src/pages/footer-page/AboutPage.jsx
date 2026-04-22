@@ -40,14 +40,14 @@ const journeySteps = [
   {
     title: "Problem Discovery",
     tag: "The Struggle",
-    text: "Users often spend hours trying to find reliable local professionals. The process is slow, uncertain, and stressful.",
+    text: "People often spend hours searching for dependable local professionals. The process is slow, uncertain, and stressful.",
     icon: <Compass size={18} />,
     color: "bg-pink-500"
   },
   {
     title: "Vision Crafting",
     tag: "The Purpose",
-    text: "The goal became clear: build a trusted place where people can find verified experts quickly and confidently.",
+    text: "The vision became clear: create a trusted place where people can find verified experts quickly and confidently.",
     icon: <Lightbulb size={18} />,
     color: "bg-indigo-500"
   },
@@ -139,8 +139,12 @@ const AboutPage = () => {
   const [activeTech, setActiveTech] = useState(techStack[0]);
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] py-12 px-4 ">
-      <div className="max-w-4xl mx-auto space-y-12">
+    <div className="min-h-screen bg-[#FFF7EF] py-12 px-4 relative overflow-hidden">
+      <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-[#007FFF]/12 blur-3xl" />
+      <div className="absolute top-1/3 -right-20 w-72 h-72 rounded-full bg-amber-300/20 blur-3xl" />
+      <div className="absolute -bottom-24 left-1/3 w-72 h-72 rounded-full bg-emerald-200/20 blur-3xl" />
+
+      <div className="max-w-4xl mx-auto space-y-12 relative z-10">
         
         {/* --- BACK BUTTON --- */}
         <button 
@@ -217,29 +221,51 @@ const AboutPage = () => {
 
         {/* --- EVOLUTION OF AN IDEA (TIMELINE) --- */}
         <div className="pt-10">
-          <div className="text-center mb-12">
-             <span className="bg-white px-4 py-1 rounded-full text-[10px] font-bold text-[#007FFF] border border-[#007FFF]/10 shadow-sm uppercase tracking-widest">Roadmap</span>
-             <h2 className="text-3xl font-bold text-gray-800 mt-4 tracking-tight">The Evolution of an Idea</h2>
+          <div className="text-center mb-12 md:mb-14">
+             <span className="bg-white/85 backdrop-blur-sm px-4 py-1 rounded-full text-[10px] font-bold text-[#007FFF] border border-[#007FFF]/15 shadow-sm uppercase tracking-[0.2em]">Journey</span>
+             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-4 tracking-tight">The Evolution of the Idea</h2>
+             <p className="text-sm text-gray-500 mt-3 max-w-xl mx-auto">From a frustrating daily problem to a trusted local-services platform, one milestone at a time.</p>
           </div>
 
-          <div className="space-y-6 max-w-2xl mx-auto relative before:absolute before:left-8 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100">
-            {journeySteps.map((step, idx) => (
-              <div key={idx} className="relative pl-16 group">
-                <div className={`absolute left-5 top-2 w-6 h-6 rounded-full border-4 border-white shadow-md ${step.color} z-10 group-hover:scale-110 transition-transform`}></div>
-                <div className="bg-white p-6 rounded-3xl border border-white shadow-sm hover:shadow-md transition-all">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className={`p-2 rounded-lg ${step.color} text-white`}>{step.icon}</span>
-                    <div>
-                      <h4 className="text-sm font-bold text-gray-800">{step.title}</h4>
-                      <p className="text-[9px] font-bold text-[#007FFF] uppercase tracking-widest">{step.tag}</p>
+          <div className="max-w-3xl mx-auto relative">
+            <div className="absolute left-3 md:left-1/2 md:-translate-x-1/2 top-2 bottom-2 w-0.5 bg-linear-to-b from-[#007FFF]/20 via-amber-300/40 to-emerald-300/40" />
+
+            <div className="space-y-5 md:space-y-7">
+              {journeySteps.map((step, idx) => {
+                const isEven = idx % 2 === 0;
+
+                return (
+                  <MotionDiv
+                    key={idx}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.35, delay: idx * 0.08 }}
+                    className={`relative pl-11 md:pl-0 ${isEven ? "md:pr-[52%]" : "md:pl-[52%]"}`}
+                  >
+                    <div className={`absolute left-0 md:left-1/2 md:-translate-x-1/2 top-7 w-6 h-6 rounded-full border-4 border-[#FFF7EF] shadow ${step.color} z-10`}></div>
+
+                    <div
+                      className={`group rounded-[28px] border border-white/80 bg-white/90 backdrop-blur-sm p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 ${
+                        isEven ? "md:mr-8" : "md:ml-8"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className={`p-2.5 rounded-xl ${step.color} text-white shadow-md`}>{step.icon}</span>
+                        <div>
+                          <h4 className="text-sm md:text-base font-bold text-gray-800 tracking-tight">{step.title}</h4>
+                          <p className="text-[10px] font-bold text-[#007FFF] uppercase tracking-[0.15em]">{step.tag}</p>
+                        </div>
+                      </div>
+
+                      <p className="text-xs md:text-sm text-gray-600 leading-relaxed font-medium">
+                        {step.text}
+                      </p>
                     </div>
-                  </div>
-                  <p className="text-xs text-gray-500 leading-relaxed font-medium">
-                    {step.text}
-                  </p>
-                </div>
-              </div>
-            ))}
+                  </MotionDiv>
+                );
+              })}
+            </div>
           </div>
         </div>
 
