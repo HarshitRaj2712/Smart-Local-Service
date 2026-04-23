@@ -54,7 +54,7 @@ const journeySteps = [
   {
     title: "Solution Development",
     tag: "The Build",
-    text: "LocalTrust was designed around verification, clean booking flows, and a user-first experience.",
+    text: "Smart Local Trust was designed around verification, clean booking flows, and a user-first experience.",
     icon: <Code2 size={18} />,
     color: "bg-emerald-500"
   },
@@ -163,7 +163,7 @@ const AboutPage = () => {
           className="text-center space-y-4"
         >
           <span className="inline-block px-4 py-1 rounded-full bg-white border border-[#007FFF]/10 text-[#007FFF] text-[10px] font-bold uppercase tracking-[0.2em]">
-            About Roomezy
+            About Smart Local Trust
           </span>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight leading-tight">
             Redefining <span className="text-[#007FFF]">Local Service</span> Discovery
@@ -189,15 +189,15 @@ const AboutPage = () => {
            
            <div className="bg-white/70 backdrop-blur-xl border border-white p-6 rounded-[28px] shadow-sm max-w-2xl mx-auto">
              <p className="text-sm text-gray-600 leading-relaxed font-medium">
-               "I created Roomezy to solve one practical problem: finding dependable professionals should feel easy, not risky. This platform is built to reduce guesswork and improve trust."
+               "I created Smart Local Trust to solve one practical problem: finding dependable professionals should feel easy, not risky. This platform is built to reduce guesswork and improve trust."
              </p>
            </div>
 
            <div className="mt-8 flex justify-center gap-4">
-              <SocialBtn icon={<Github size={16} />} label="GitHub" />
-              <SocialBtn icon={<Linkedin size={16} />} label="LinkedIn" />
-              <SocialBtn icon={<Globe size={16} />} label="Portfolio" />
-              <SocialBtn icon={<Mail size={16} />} label="Email" />
+              <SocialBtn icon={<Github size={16} />} label="GitHub" href="https://github.com/HarshitRaj2712" />
+              <SocialBtn icon={<Linkedin size={16} />} label="LinkedIn" href="https://www.linkedin.com/in/harshit-raj-10931b282/" />
+              <SocialBtn icon={<Globe size={16} />} label="Portfolio" href="https://hars8it2712.vercel.app" />
+              <SocialBtn icon={<Mail size={16} />} label="Email" href="mailto:hars8it2712@gmail.com" />
            </div>
         </div>
 
@@ -354,7 +354,7 @@ const AboutPage = () => {
             <Sparkles size={100} className="text-white" />
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight relative z-10">Ready to Find Your Match?</h2>
-          <p className="text-white/70 text-xs mt-2 mb-8 relative z-10">Join Roomezy today and explore trusted local services.</p>
+          <p className="text-white/70 text-xs mt-2 mb-8 relative z-10">Join Smart Local Trust today and explore trusted local services.</p>
           <button onClick={() => navigate("/signup")} className="bg-white text-[#007FFF] px-10 py-4 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-all relative z-10">
             Get Started <ChevronRight size={14} className="inline ml-1" />
           </button>
@@ -366,10 +366,15 @@ const AboutPage = () => {
 };
 
 /* --- Helper Social Link --- */
-const SocialBtn = ({ icon, label }) => (
-  <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-gray-100 text-[10px] font-bold text-gray-500 hover:text-[#007FFF] hover:shadow-md transition-all uppercase tracking-widest">
+const SocialBtn = ({ icon, label, href }) => (
+  <a
+    href={href}
+    target={href?.startsWith("mailto:") ? "_self" : "_blank"}
+    rel={href?.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+    className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-gray-100 text-[10px] font-bold text-gray-500 hover:text-[#007FFF] hover:shadow-md transition-all uppercase tracking-widest"
+  >
     {icon} {label}
-  </button>
+  </a>
 );
 
 export default AboutPage;
