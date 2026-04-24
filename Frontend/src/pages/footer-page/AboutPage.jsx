@@ -139,10 +139,7 @@ const AboutPage = () => {
   const [activeTech, setActiveTech] = useState(techStack[0]);
 
   return (
-    <div className="min-h-screen bg-[#FFF7EF] py-12 px-4 relative overflow-hidden">
-      <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-[#007FFF]/12 blur-3xl" />
-      <div className="absolute top-1/3 -right-20 w-72 h-72 rounded-full bg-amber-300/20 blur-3xl" />
-      <div className="absolute -bottom-24 left-1/3 w-72 h-72 rounded-full bg-emerald-200/20 blur-3xl" />
+    <div className="min-h-screen bg-[#FFF0F5] py-12 px-4">
 
       <div className="max-w-4xl mx-auto space-y-12 relative z-10">
         
@@ -243,7 +240,7 @@ const AboutPage = () => {
                     transition={{ duration: 0.35, delay: idx * 0.08 }}
                     className={`relative pl-11 md:pl-0 ${isEven ? "md:pr-[52%]" : "md:pl-[52%]"}`}
                   >
-                    <div className={`absolute left-0 md:left-1/2 md:-translate-x-1/2 top-7 w-6 h-6 rounded-full border-4 border-[#FFF7EF] shadow ${step.color} z-10`}></div>
+                    <div className={`absolute left-0 md:left-1/2 md:-translate-x-1/2 top-7 w-6 h-6 rounded-full border-4 border-[#FFF0F5] shadow ${step.color} z-10`}></div>
 
                     <div
                       className={`group rounded-[28px] border border-white/80 bg-white/90 backdrop-blur-sm p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 ${
