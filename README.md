@@ -5,7 +5,7 @@
 ---
 
 ## 🚀 Vision
-In a world where finding reliable local help often depends on unverified listings and word-of-mouth, **LocalTrust** provides a verified digital identity for professionals and a seamless booking experience for users.
+In a world where finding reliable local help often depends on unverified listings and word-of-mouth, **LocalTrust** provides a verified digital identity for professionals and a seamless booking experience for users
 
 ## 🛠️ Tech Stack
 
