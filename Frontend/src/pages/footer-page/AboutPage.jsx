@@ -175,7 +175,7 @@ const AboutPage = () => {
            <h2 className="text-xl font-bold text-gray-800 mb-8">Meet the Creator</h2>
            <div className="relative inline-block group mb-6">
               <div className="w-32 h-32 md:w-36 md:h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden mx-auto ring-8 ring-white/30">
-                <img src="https://via.placeholder.com/150" alt="Harshit" className="w-full h-full object-cover" />
+                <img src="https://api.dicebear.com/9.x/notionists/svg?seed=SmartLocalTrust" alt="Creator avatar" className="w-full h-full object-cover" />
               </div>
               <div className="absolute bottom-1 right-1 bg-white p-2.5 rounded-full shadow-lg border border-gray-100 text-[#007FFF]">
                 <User size={18} fill="currentColor" />
@@ -186,7 +186,7 @@ const AboutPage = () => {
            
            <div className="bg-white/70 backdrop-blur-xl border border-white p-6 rounded-[28px] shadow-sm max-w-2xl mx-auto">
              <p className="text-sm text-gray-600 leading-relaxed font-medium">
-               "I created Smart Local Trust to solve one practical problem: finding dependable professionals should feel easy, not risky. This platform is built to reduce guesswork and improve trust."
+               "I built Smart Local Trust to solve three real problems at once: hard-to-verify service providers, confusing booking communication, and low trust in local hiring. This project gives users one reliable place to discover verified professionals, book with clarity, and choose with confidence."
              </p>
            </div>
 
