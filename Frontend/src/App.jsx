@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./component/Navbar";
+import "./App.css";
 import ScrollToTop from "./component/ScrollToTop";
 import ProtectedRoute from "./component/ProtectedRoute";
 import RoleBasedRoute from "./component/RoleBasedRoute";
@@ -37,7 +38,7 @@ const App = () => {
     <>
       <Navbar  />
       <ScrollToTop />
-      <main className="pt-24 md:pt-28 bg-[#FFF0F5] min-h-screen">
+      <main className="pt-24 md:pt-28 min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] transition-colors duration-200">
       <Routes>
         <Route path="/" element={<Home />} />
          <Route path="/how" element={<HowItWorksPage />} />

@@ -30,7 +30,7 @@ const Hero = () => {
     }
   };
   return (
-    <section className="bg-[#FFF0F5] py-10 px-4">
+    <section className="bg-(--bg-main) py-10 px-4 transition-colors duration-200">
       <div className="max-w-5xl mx-auto">
         
         {/* Hero Box: Maintained Blue Theme */}
@@ -38,7 +38,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="bg-[#007FFF] rounded-xl shadow-lg px-6 py-12 md:py-16 text-center text-white relative overflow-hidden"
+          className="bg-[var(--accent)] rounded-xl shadow-lg px-6 py-12 md:py-16 text-center text-white relative overflow-hidden transition-colors duration-200"
         >
 
           {/* High-Visibility Corner Shapes: Increased opacity to 20% for a stronger look */}
@@ -73,12 +73,12 @@ const Hero = () => {
             className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10"
           >
             {/* Button 1: White -> Blue with Sky Blue Border Hover */}
-            <button onClick={handleBookService} className="bg-white text-[#007FFF] px-8 py-2.5 rounded-lg font-semibold border-2 border-transparent hover:bg-[#007FFF] hover:text-white hover:border-sky-300 transition-all duration-300">
+            <button onClick={handleBookService} className="bg-white text-[var(--accent)] px-8 py-2.5 rounded-lg font-semibold border-2 border-transparent hover:bg-[var(--accent-hover)] hover:text-white hover:border-[color:var(--accent-soft)] transition-all duration-300">
               Book a Service
             </button>
 
             {/* Button 2: Border -> White Hover */}
-            <button onClick={handleBecomeProvider} className="border-2 border-white text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-white hover:text-[#007FFF] transition-all duration-300">
+            <button onClick={handleBecomeProvider} className="border-2 border-white text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-white hover:text-[var(--accent)] transition-all duration-300">
               Become a Provider
             </button>
 

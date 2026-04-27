@@ -1,0 +1,102 @@
+
+@import "tailwindcss";
+
+
+:root[data-theme="light"] {
+	--bg-main: #FFF0F5;
+	--bg-surface: #FFFFFF;
+	--bg-panel: rgba(255, 255, 255, 0.4);
+	--bg-muted: #F4F7FB;
+	--text-main: #1f2937;
+	--text-muted: #6b7280;
+	--accent: #007FFF;
+	--accent-hover: #3B94F0;
+	--accent-soft: #DDEEFF;
+	--border-color: rgba(255, 255, 255, 0.6);
+	--nav-bg: var(--bg-panel);
+	--btn-gradient: linear-gradient(135deg, #4FA7FF, #72BEFF);
+	--btn-gradient-hover: linear-gradient(135deg, #3B94F0, #5FB0FF);
+	--footer-bg: #007FFF;
+	--footer-text: #FFFFFF;
+	--footer-muted: #EAF4FF;
+	--primary-soft: rgba(79, 167, 255, 0.12);
+	--shadow-elevated: 0 24px 60px rgba(15, 23, 42, 0.08);
+	color-scheme: light;
+}
+
+
+:root[data-theme="dark"] {
+	--bg-main: #0F0E0E;
+	--bg-surface: #121C2E;
+	--bg-panel: rgba(18, 28, 46, 0.82);
+	--bg-muted: #18263D;
+	--text-main: #F2F7FF;
+	--text-muted: #C4D4EE;
+	--accent: #007FFF;
+	--accent-hover: #78C1FF;
+	--accent-soft: #173357;
+	--border-color: #233858;
+	--nav-bg: rgba(10, 18, 32, 0.82);
+	--btn-gradient: linear-gradient(135deg, #4FA7FF, #78C1FF);
+	--btn-gradient-hover: linear-gradient(135deg, #78C1FF, #A4D7FF);
+	--footer-bg: #007FFF;
+	--footer-text: #FFFFFF;
+	--footer-muted: #DCEBFF;
+	--primary-soft: rgba(79, 167, 255, 0.16);
+	--shadow-elevated: 0 24px 60px rgba(0, 0, 0, 0.35);
+	color-scheme: dark;
+}
+
+html {
+	background: var(--bg-main);
+}
+
+body {
+	margin: 0;
+	background: var(--bg-main);
+	color: var(--text-main);
+	transition: background-color 200ms ease, color 200ms ease;
+}
+
+#root {
+	min-height: 100vh;
+	background: var(--bg-main);
+	color: var(--text-main);
+}
+
+::selection {
+	background: var(--accent-soft);
+	color: var(--text-main);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+}
+
+@keyframes fadeIn {
+	from { opacity: 0 }
+	to { opacity: 1 }
+}
+
+@keyframes scaleIn {
+	from {
+		transform: scale(.9);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+.animate-fadeIn {
+	animation: fadeIn .25s ease forwards;
+}
+
+.animate-scaleIn {
+	animation: scaleIn .25s ease forwards;
+}

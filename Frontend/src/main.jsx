@@ -4,8 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { Toaster } from "react-hot-toast";   // ✅ add this
-import "./App.css";
+import "./index.css";
 import App from "./App.jsx";
+
+const storedTheme = localStorage.getItem("theme");
+const initialTheme = storedTheme === "dark" ? "dark" : "light";
+
+document.documentElement.setAttribute("data-theme", initialTheme);
+document.documentElement.style.colorScheme = initialTheme;
+localStorage.setItem("theme", initialTheme);
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>

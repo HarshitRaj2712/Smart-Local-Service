@@ -9,29 +9,29 @@ const LoginRequiredModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-md z-50 animate-fadeIn">
 
-      <div className="relative bg-white/90 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl p-10 max-w-sm w-full text-center animate-scaleIn">
+      <div className="relative bg-(--bg-surface) backdrop-blur-xl border border-(--border-color) shadow-2xl rounded-3xl p-10 max-w-sm w-full text-center animate-scaleIn text-(--text-main)">
 
         {/* CLOSE BUTTON */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-700"
+          className="absolute top-4 right-4 text-(--text-muted) hover:text-(--text-main)"
         >
           <X size={18} />
         </button>
 
         {/* ICON */}
         <div className="flex justify-center mb-5">
-          <div className="p-4 rounded-full bg-blue-50 text-[#007FFF]">
+          <div className="p-4 rounded-full bg-(--bg-muted) text-[var(--accent)]">
             <LockKeyhole size={28} />
           </div>
         </div>
 
         {/* TITLE */}
-        <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
+        <h2 className="text-2xl font-extrabold text-(--text-main) mb-2">
           Login Required
         </h2>
 
-        <p className="text-gray-500 text-sm mb-8">
+        <p className="text-(--text-muted) text-sm mb-8">
           Please login first to access this feature.
         </p>
 
@@ -40,14 +40,14 @@ const LoginRequiredModal = ({ isOpen, onClose }) => {
 
           <button
             onClick={onClose}
-            className="px-6 py-2 rounded-full border border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition"
+            className="px-6 py-2 rounded-full border border-(--border-color) text-(--text-muted) font-semibold hover:bg-(--bg-muted) transition"
           >
             Cancel
           </button>
 
           <button
             onClick={() => navigate("/login")}
-            className="px-6 py-2 rounded-full bg-[#007FFF] text-white font-bold shadow-lg hover:shadow-[#007FFF]/30 transition"
+            className="px-6 py-2 rounded-full bg-[var(--accent)] text-white font-bold shadow-lg hover:bg-[var(--accent-hover)] transition"
           >
             Login Now
           </button>
