@@ -61,14 +61,14 @@ const ProviderDetail = () => {
 
   if (!provider) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FFF0F5]">
+      <div className="min-h-screen flex items-center justify-center bg-(--bg-main) transition-colors duration-200">
         <div className="w-12 h-12 border-4 border-[#007FFF] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] pb-20">
+    <div className="min-h-screen bg-(--bg-main) pb-20 transition-colors duration-200">
 
       {/* LOGIN MODAL */}
       <LoginRequiredModal
@@ -82,7 +82,7 @@ const ProviderDetail = () => {
         {/* BACK BUTTON */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-500 font-bold text-sm hover:text-[#007FFF] mb-6"
+          className="flex items-center gap-2 text-(--text-muted) font-bold text-sm hover:text-[#007FFF] mb-6"
         >
           <ArrowLeft size={18} />
           Back to list
@@ -91,7 +91,7 @@ const ProviderDetail = () => {
         <div className="grid lg:grid-cols-3 gap-8">
 
           {/* LEFT CARD */}
-          <div className="bg-white p-8 rounded-3xl text-center shadow-sm">
+          <div className="bg-(--bg-surface) p-8 rounded-3xl text-center shadow-sm border border-(--border-color)">
 
             <img
               src={
@@ -103,7 +103,7 @@ const ProviderDetail = () => {
               className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
             />
 
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-2xl font-bold text-(--text-main)">
               {provider.user?.name}
             </h2>
 
@@ -114,10 +114,10 @@ const ProviderDetail = () => {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 mt-6 border-t pt-4">
+            <div className="grid grid-cols-2 mt-6 border-t border-(--border-color) pt-4">
 
               <div>
-                <p className="text-xs text-gray-400">Rating</p>
+                <p className="text-xs text-(--text-muted)">Rating</p>
                 <div className="flex items-center justify-center gap-1 text-yellow-500 font-bold">
                   <Star size={14} fill="currentColor" />
                   {provider.averageRating?.toFixed(1) || "0.0"}
@@ -125,7 +125,7 @@ const ProviderDetail = () => {
               </div>
 
               <div>
-                <p className="text-xs text-gray-400">Trust</p>
+                <p className="text-xs text-(--text-muted)">Trust</p>
                 <p className="text-[#007FFF] font-bold">
                   {provider.trustScore?.toFixed(0) || 0}%
                 </p>
@@ -139,7 +139,7 @@ const ProviderDetail = () => {
               {!role ? (
                 <button
                   onClick={handleBook}
-                  className="w-full bg-gray-900 text-white py-3 rounded-xl flex items-center justify-center gap-2"
+                  className="w-full bg-(--bg-muted) text-white py-3 rounded-xl flex items-center justify-center gap-2"
                 >
                   <LockKeyhole size={18} />
                   Login to Book
@@ -165,12 +165,12 @@ const ProviderDetail = () => {
           <div className="lg:col-span-2 space-y-8">
 
             {/* BIO */}
-            <div className="bg-white p-8 rounded-3xl shadow-sm">
-              <h3 className="text-xl font-bold mb-4">
+            <div className="bg-(--bg-surface) p-8 rounded-3xl shadow-sm border border-(--border-color)">
+              <h3 className="text-xl font-bold text-(--text-main) mb-4">
                 About {provider.user?.name}
               </h3>
 
-              <p className="text-gray-600">
+              <p className="text-(--text-muted)">
                 {provider.bio || "No bio provided"}
               </p>
             </div>
@@ -178,13 +178,13 @@ const ProviderDetail = () => {
             {/* PORTFOLIO */}
             <div>
 
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-(--text-main) mb-4 flex items-center gap-2">
                 <ImageIcon size={20} />
                 Work Portfolio
               </h3>
 
               {provider.portfolioImages?.length === 0 ? (
-                <div className="border-dashed border-2 p-10 text-center text-gray-400 rounded-3xl">
+                <div className="border-dashed border-2 border-(--border-color) p-10 text-center text-(--text-muted) rounded-3xl">
                   No portfolio images
                 </div>
               ) : (

@@ -136,12 +136,12 @@ const ProviderDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] pb-16">
+    <div className="min-h-screen bg-(--bg-main) pb-16 transition-colors duration-200">
       <div className="max-w-6xl mx-auto p-6 space-y-8">
 
         {/* EMAIL VERIFY */}
         {!user.isEmailVerified && (
-          <div className="flex justify-between items-center bg-white p-4 rounded-xl">
+          <div className="flex justify-between items-center bg-(--bg-surface) p-4 rounded-xl border border-(--border-color)">
             <div className="flex items-center gap-3">
               <ShieldAlert className="text-red-500" size={20} />
               <p>Email not verified. Verify now!</p>
@@ -158,16 +158,16 @@ const ProviderDashboard = () => {
 
         {/* HEADER */}
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold">
+          <h1 className="text-4xl font-extrabold text-(--text-main)">
             Welcome, <span className="text-[#007FFF]">{user.name}</span>
           </h1>
-          <p className="text-gray-400 text-xs uppercase tracking-widest">
+          <p className="text-(--text-muted) text-xs uppercase tracking-widest">
             Provider Control Panel
           </p>
         </div>
 
         {/* PROFILE */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm flex flex-col md:flex-row gap-8 items-center">
+        <div className="bg-(--bg-surface) p-8 rounded-3xl shadow-sm flex flex-col md:flex-row gap-8 items-center border border-(--border-color)">
           <img
             src={user.profilePic || "https://via.placeholder.com/120"}
             className="w-32 h-32 rounded-full object-cover"
@@ -175,8 +175,8 @@ const ProviderDashboard = () => {
           />
 
           <div>
-            <h2 className="text-2xl font-bold">{user.name}</h2>
-            <div className="flex items-center gap-2 text-gray-500">
+            <h2 className="text-2xl font-bold text-(--text-main)">{user.name}</h2>
+            <div className="flex items-center gap-2 text-(--text-muted)">
               <Mail size={16} /> {user.email}
             </div>
 
@@ -197,7 +197,7 @@ const ProviderDashboard = () => {
             className={`px-6 py-2 rounded-full ${
               activeTab === "overview"
                 ? "bg-[#007FFF] text-white"
-                : "bg-white"
+                : "bg-(--bg-surface) border border-(--border-color) text-(--text-main)"
             }`}
           >
             Overview
@@ -208,7 +208,7 @@ const ProviderDashboard = () => {
             className={`px-6 py-2 rounded-full ${
               activeTab === "bookings"
                 ? "bg-[#007FFF] text-white"
-                : "bg-white"
+                : "bg-(--bg-surface) border border-(--border-color) text-(--text-main)"
             }`}
           >
             Bookings
@@ -216,7 +216,7 @@ const ProviderDashboard = () => {
 
           <button
             onClick={() => navigate("/provider/setup")}
-            className="px-6 py-2 bg-white rounded-full flex items-center gap-2"
+            className="px-6 py-2 bg-(--bg-surface) rounded-full flex items-center gap-2 border border-(--border-color) text-(--text-main)"
           >
             <Settings size={14} /> Edit
           </button>
@@ -233,11 +233,11 @@ const ProviderDashboard = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-xl">
+              <div className="bg-(--bg-surface) p-6 rounded-xl border border-(--border-color)">
                 <Pie data={pieData} />
               </div>
 
-              <div className="bg-white p-6 rounded-xl">
+              <div className="bg-(--bg-surface) p-6 rounded-xl border border-(--border-color)">
                 <Bar data={barData} />
               </div>
             </div>
@@ -250,14 +250,14 @@ const ProviderDashboard = () => {
             {bookings.map((booking) => (
               <div
                 key={booking._id}
-                className="bg-white p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4"
+                className="bg-(--bg-surface) p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4 border border-(--border-color)"
               >
                 <div>
-                  <h4 className="font-bold">{booking.user.name}</h4>
-                  <p className="text-xs text-gray-400">
+                  <h4 className="font-bold text-(--text-main)">{booking.user.name}</h4>
+                  <p className="text-xs text-(--text-muted)\">
                     {new Date(booking.serviceDate).toDateString()}
                   </p>
-                  <p className="italic text-sm mt-1">
+                  <p className="italic text-sm mt-1 text-(--text-muted)\">
                     "{booking.description}"
                   </p>
                 </div>
@@ -354,10 +354,10 @@ const ProviderDashboard = () => {
 
 /* ================= STAT CARD ================= */
 const StatCard = ({ label, value, icon }) => (
-  <div className="bg-white p-6 rounded-2xl text-center shadow-sm">
-    <div className="flex justify-center mb-2">{icon}</div>
-    <p className="text-xs text-gray-400 uppercase">{label}</p>
-    <h3 className="text-xl font-bold">{value}</h3>
+  <div className="bg-(--bg-surface) p-6 rounded-2xl text-center shadow-sm border border-(--border-color)\">
+    <div className="flex justify-center mb-2 text-[#007FFF]\">{icon}</div>
+    <p className="text-xs text-(--text-muted) uppercase\">{label}</p>
+    <h3 className="text-xl font-bold text-(--text-main)\">{value}</h3>
   </div>
 );
 

@@ -147,15 +147,15 @@ const ProviderProfileSetup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] flex justify-center items-center p-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
-      <div className="bg-white/90 backdrop-blur-2xl border border-white p-10 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] w-full max-w-2xl">
+    <div className="min-h-screen bg-(--bg-main) flex justify-center items-center p-6 transition-colors duration-200" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      <div className="bg-(--bg-surface) backdrop-blur-2xl border border-(--border-color) p-10 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] w-full max-w-2xl">
         
         {/* Header */}
         <div className="text-center space-y-2 mb-10">
-          <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h2 className="text-3xl font-extrabold text-(--text-main) tracking-tight">
             {existingProfile ? "Update" : "Setup"} <span className="text-[#007FFF]">Professional</span> Profile
           </h2>
-          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em]">Build your trust with customers</p>
+          <p className="text-(--text-muted) text-xs font-bold uppercase tracking-[0.2em]">Build your trust with customers</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -202,7 +202,7 @@ const ProviderProfileSetup = () => {
               onChange={handleChange}
               value={formData.bio}
               rows="3"
-              className="w-full bg-[#F8FAFC] border-none text-sm font-bold p-4 rounded-2xl focus:ring-2 focus:ring-[#007FFF] transition-all"
+              className="w-full bg-(--bg-muted) border-none text-sm font-bold p-4 rounded-2xl focus:ring-2 focus:ring-[#007FFF] transition-all text-(--text-main)"
             />
           </div>
 
@@ -210,16 +210,16 @@ const ProviderProfileSetup = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {/* ID Proof */}
             <div className="space-y-4">
-              <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">
+              <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-(--text-muted) ml-2">
                 <UploadCloud size={12} /> ID Proof
               </label>
-              <label className="group relative flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-200 rounded-[30px] hover:border-[#007FFF] hover:bg-blue-50/50 transition-all cursor-pointer overflow-hidden">
+              <label className="group relative flex flex-col items-center justify-center h-40 border-2 border-dashed border-(--border-color) rounded-[30px] hover:border-[#007FFF] hover:bg-blue-50/50 transition-all cursor-pointer overflow-hidden">
                 {previews.id ? (
                   <img src={previews.id} className="w-full h-full object-cover" alt="ID Preview" />
                 ) : (
                   <div className="text-center space-y-2">
-                    <UploadCloud className="mx-auto text-gray-300 group-hover:text-[#007FFF]" />
-                    <p className="text-[11px] font-bold text-gray-400">Click to upload</p>
+                    <UploadCloud className="mx-auto text-(--text-muted)/50 group-hover:text-[#007FFF]" />
+                    <p className="text-[11px] font-bold text-(--text-muted)\">Click to upload</p>
                   </div>
                 )}
                 <input type="file" className="hidden" onChange={(e) => handleFileChange(e, "id")} />
@@ -228,20 +228,20 @@ const ProviderProfileSetup = () => {
 
             {/* Portfolio */}
             <div className="space-y-4">
-              <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 ml-2">
+              <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-(--text-muted) ml-2">
                 <ImageIcon size={12} /> Portfolio Images
               </label>
-              <label className="group relative flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-200 rounded-[30px] hover:border-[#007FFF] hover:bg-blue-50/50 transition-all cursor-pointer overflow-hidden">
+              <label className="group relative flex flex-col items-center justify-center h-40 border-2 border-dashed border-(--border-color) rounded-[30px] hover:border-[#007FFF] hover:bg-blue-50/50 transition-all cursor-pointer overflow-hidden">
                 {previews.portfolio.length > 0 ? (
                   <div className="grid grid-cols-2 w-full h-full">
                     {previews.portfolio.slice(0, 4).map((src, i) => (
-                      <img key={i} src={src} className="w-full h-full object-cover border-[1px] border-white" alt="Portfolio" />
+                      <img key={i} src={src} className="w-full h-full object-cover border-[1px] border-(--border-color)" alt="Portfolio" />
                     ))}
                   </div>
                 ) : (
                   <div className="text-center space-y-2">
-                    <ImageIcon className="mx-auto text-gray-300 group-hover:text-[#007FFF]" />
-                    <p className="text-[11px] font-bold text-gray-400">Upload work samples</p>
+                    <ImageIcon className="mx-auto text-(--text-muted)/50 group-hover:text-[#007FFF]" />
+                    <p className="text-[11px] font-bold text-(--text-muted)\">Upload work samples</p>
                   </div>
                 )}
                 <input type="file" multiple className="hidden" onChange={(e) => handleFileChange(e, "portfolio")} />

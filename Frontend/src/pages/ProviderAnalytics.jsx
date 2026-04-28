@@ -76,43 +76,43 @@ const ProviderAnalytics = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-8 text-center">
+    <div className="max-w-6xl mx-auto p-6 min-h-screen bg-(--bg-main) transition-colors duration-200">
+      <h2 className="text-3xl font-bold mb-8 text-center text-(--text-main)">
         Provider Analytics
       </h2>
 
       <div className="grid md:grid-cols-3 gap-6 mb-8">
 
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3>Total Bookings</h3>
-          <p className="text-3xl font-bold mt-2">
+        <div className="bg-(--bg-surface) shadow-md rounded-xl p-6 text-center border border-(--border-color)">
+          <h3 className="text-(--text-main)">Total Bookings</h3>
+          <p className="text-3xl font-bold mt-2 text-(--text-main)">
             {stats.totalBookings}
           </p>
         </div>
 
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3>⭐ Average Rating</h3>
+        <div className="bg-(--bg-surface) shadow-md rounded-xl p-6 text-center border border-(--border-color)">
+          <h3 className="text-(--text-main)">⭐ Average Rating</h3>
           <p className="text-3xl font-bold mt-2 text-yellow-500">
             {stats.averageRating?.toFixed(1)}
           </p>
         </div>
 
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3>Trust Score</h3>
+        <div className="bg-(--bg-surface) shadow-md rounded-xl p-6 text-center border border-(--border-color)">
+          <h3 className="text-(--text-main)">Trust Score</h3>
           <p className="text-3xl font-bold mt-2 text-purple-600">
             {stats.trustScore?.toFixed(0)}/100
           </p>
         </div>
 
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3>Total Earnings</h3>
+        <div className="bg-(--bg-surface) shadow-md rounded-xl p-6 text-center border border-(--border-color)">
+          <h3 className="text-(--text-main)">Total Earnings</h3>
           <p className="text-3xl font-bold mt-2 text-green-600">
             ₹{stats.totalEarnings}
           </p>
         </div>
 
-        <div className="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3>Platform Commission</h3>
+        <div className="bg-(--bg-surface) shadow-md rounded-xl p-6 text-center border border-(--border-color)">
+          <h3 className="text-(--text-main)">Platform Commission</h3>
           <p className="text-3xl font-bold mt-2 text-red-500">
             ₹{stats.platformCommissionGenerated}
           </p>

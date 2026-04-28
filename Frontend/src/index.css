@@ -27,7 +27,7 @@
 
 :root[data-theme="dark"] {
 	--bg-main: #0F0E0E;
-	--bg-surface: #121C2E;
+	--bg-surface: #0c1320;
 	--bg-panel: rgba(18, 28, 46, 0.82);
 	--bg-muted: #18263D;
 	--text-main: #F2F7FF;
@@ -99,4 +99,27 @@ h6 {
 
 .animate-scaleIn {
 	animation: scaleIn .25s ease forwards;
+}
+
+/* Select & Option Styling */
+select {
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23007FFF' d='M1 4l5 5 5-5'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 1rem center;
+	padding-right: 2.5rem;
+}
+
+select option {
+	padding: 8px;
+	border: none;
+	outline: none;
+}
+
+select option:checked {
+	background: var(--accent) !important;
+	color: white !important;
+	border: none;
+	outline: none;
+	box-shadow: none;
 }

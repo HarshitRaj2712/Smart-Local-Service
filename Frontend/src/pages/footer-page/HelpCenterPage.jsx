@@ -146,7 +146,7 @@ const HelpCenterPage = () => {
   const faqs = faqByCategory[activeCategory];
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] ">
+    <div className="min-h-screen bg-(--bg-main) transition-colors duration-200">
       {/* --- HEADER SECTION --- */}
       <MotionSection
         initial={{ opacity: 0, y: 20 }}
@@ -155,13 +155,13 @@ const HelpCenterPage = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="pt-20 pb-12 px-6 text-center"
       >
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white shadow-sm mb-4 text-[#007FFF]">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-(--bg-surface) shadow-sm mb-4 text-[#007FFF]">
           <HelpCircle size={28} />
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 tracking-tight">
+        <h1 className="text-3xl md:text-4xl font-bold text-(--text-main) tracking-tight">
           LocalTrust Help Center
         </h1>
-        <p className="mt-3 text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-3 text-sm text-(--text-muted) max-w-2xl mx-auto leading-relaxed">
           Your guide to finding, booking, and managing local services with confidence. 
           Explore guides, FAQs, and connect with our support team.
         </p>
@@ -184,13 +184,13 @@ const HelpCenterPage = () => {
         </div>
 
         {/* --- SEARCH & CATEGORIES --- */}
-        <div className="bg-white rounded-4xl p-8 shadow-sm border border-white/50">
+        <div className="bg-(--bg-surface) rounded-4xl p-8 shadow-sm border border-(--border-color)">
           <div className="relative mb-6">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--text-muted)" size={18} />
             <input 
               type="text" 
               placeholder="Search for topics, questions, or keywords..." 
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-[#FFF0F5]/50 border border-gray-100 focus:outline-none focus:border-[#007FFF]/30 text-sm font-medium"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-(--bg-muted) border border-(--border-color) focus:outline-none focus:border-[#007FFF]/30 text-sm font-medium text-(--text-main)"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -202,7 +202,7 @@ const HelpCenterPage = () => {
                   setOpenFaq(null);
                 }}
                 className={`px-5 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all ${
-                  activeCategory === cat ? "bg-[#007FFF] text-white shadow-lg shadow-[#007FFF]/20" : "bg-white border border-gray-100 text-gray-400 hover:bg-gray-50"
+                  activeCategory === cat ? "bg-[#007FFF] text-white shadow-lg shadow-[#007FFF]/20" : "bg-(--bg-surface) border border-(--border-color) text-(--text-muted) hover:bg-(--bg-muted)"
                 }`}
               >
                 {cat}
@@ -212,12 +212,12 @@ const HelpCenterPage = () => {
         </div>
 
         {/* --- FAQ SECTION --- */}
-        <div className="bg-white rounded-4xl p-8 shadow-sm border border-white/50">
+        <div className="bg-(--bg-surface) rounded-4xl p-8 shadow-sm border border-(--border-color)">
           <div className="flex items-center gap-3 mb-8">
              <div className="p-2 bg-[#007FFF]/10 rounded-lg text-[#007FFF]">
                 <ShieldCheck size={20} />
              </div>
-             <h2 className="text-xl font-bold text-gray-800">{activeCategory} FAQs</h2>
+             <h2 className="text-xl font-bold text-(--text-main)">{activeCategory} FAQs</h2>
           </div>
 
           <div className="space-y-4">
@@ -226,17 +226,17 @@ const HelpCenterPage = () => {
                 key={index}
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="border-b border-gray-50 last:border-0 pb-4 last:pb-0"
+                className="border-b border-(--border-color) last:border-0 pb-4 last:pb-0"
               >
                 <button 
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between py-2 text-left group"
                 >
-                  <span className="text-sm font-bold text-gray-700 group-hover:text-[#007FFF] transition-colors">{faq.q}</span>
-                  {openFaq === index ? <ChevronUp size={18} className="text-[#007FFF]" /> : <ChevronDown size={18} className="text-gray-400" />}
+                  <span className="text-sm font-bold text-(--text-main) group-hover:text-[#007FFF] transition-colors">{faq.q}</span>
+                  {openFaq === index ? <ChevronUp size={18} className="text-[#007FFF]" /> : <ChevronDown size={18} className="text-(--text-muted)" />}
                 </button>
                 {openFaq === index && (
-                  <div className="mt-3 text-xs md:text-sm text-gray-500 leading-relaxed font-medium animate-in fade-in slide-in-from-top-2">
+                  <div className="mt-3 text-xs md:text-sm text-(--text-muted) leading-relaxed font-medium animate-in fade-in slide-in-from-top-2">
                     {faq.a}
                   </div>
                 )}
@@ -248,8 +248,8 @@ const HelpCenterPage = () => {
         {/* --- CONTACT SECTION --- */}
         <div className="text-center space-y-8">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">Still Need Help?</h2>
-            <p className="text-xs text-gray-400 mt-1 uppercase font-bold tracking-widest">Our support team is just a click away</p>
+            <h2 className="text-2xl font-bold text-(--text-main)">Still Need Help?</h2>
+            <p className="text-xs text-(--text-muted) mt-1 uppercase font-bold tracking-widest">Our support team is just a click away</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -258,11 +258,11 @@ const HelpCenterPage = () => {
              <ContactCard icon={<Phone size={20} />} title="Phone Support" value="+1-800-TRUST" />
           </div>
 
-          <div className="bg-white/50 rounded-2xl p-6 border border-white text-left">
+          <div className="bg-(--bg-panel) rounded-2xl p-6 border border-(--border-color) text-left">
              <div className="flex items-center gap-2 text-[#007FFF] mb-2 font-bold text-xs uppercase tracking-widest">
                 <Clock size={14} /> Support Hours & Tips
              </div>
-             <p className="text-[11px] text-gray-500 leading-relaxed font-medium">
+             <p className="text-[11px] text-(--text-muted) leading-relaxed font-medium">
                Our team is available Monday–Friday, 9 AM – 6 PM IST. We typically respond within 24 hours. For faster help, please include your booking ID or provider name in your query.
              </p>
           </div>
@@ -278,14 +278,14 @@ const QuickActionCard = ({ icon, title, desc }) => (
   <MotionDiv
     whileHover={{ y: -3 }}
     transition={{ duration: 0.2 }}
-    className="bg-white p-6 rounded-[28px] border border-white shadow-sm hover:shadow-md transition-all flex items-center gap-5 group cursor-pointer"
+    className="bg-(--bg-surface) p-6 rounded-[28px] border border-(--border-color) shadow-sm hover:shadow-md transition-all flex items-center gap-5 group cursor-pointer"
   >
-    <div className="p-4 bg-[#FFF0F5] rounded-2xl group-hover:bg-[#007FFF]/10 transition-colors">
+    <div className="p-4 bg-(--bg-muted) rounded-2xl group-hover:bg-[#007FFF]/10 transition-colors">
       {icon}
     </div>
     <div>
-      <h3 className="text-sm font-bold text-gray-800">{title}</h3>
-      <p className="text-[11px] text-gray-400 font-medium mt-0.5">{desc}</p>
+      <h3 className="text-sm font-bold text-(--text-main)">{title}</h3>
+      <p className="text-[11px] text-(--text-muted) font-medium mt-0.5">{desc}</p>
     </div>
   </MotionDiv>
 );
@@ -294,10 +294,10 @@ const ContactCard = ({ icon, title, value }) => (
   <MotionDiv
     whileHover={{ y: -4 }}
     transition={{ duration: 0.2 }}
-    className="bg-white p-6 rounded-[28px] border border-white shadow-sm text-center space-y-2 hover:-translate-y-1 transition-transform"
+    className="bg-(--bg-surface) p-6 rounded-[28px] border border-(--border-color) shadow-sm text-center space-y-2 hover:-translate-y-1 transition-transform"
   >
     <div className="text-[#007FFF] flex justify-center">{icon}</div>
-    <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest">{title}</h3>
+    <h3 className="text-xs font-bold text-(--text-main) uppercase tracking-widest">{title}</h3>
     <p className="text-[11px] font-bold text-[#007FFF]">{value}</p>
   </MotionDiv>
 );
