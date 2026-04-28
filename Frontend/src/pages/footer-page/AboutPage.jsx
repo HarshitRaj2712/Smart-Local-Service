@@ -290,7 +290,7 @@ const AboutPage = () => {
                       onHoverStart={() => setActiveTech(tech)}
                       onFocus={() => setActiveTech(tech)}
                       tabIndex={0}
-                      className={`group cursor-pointer rounded-2xl border p-4 bg-white/90 transition-all ${
+                      className={`group cursor-pointer rounded-2xl border p-4 bg-(--bg-surface) transition-all ${
                         isActive
                           ? "border-[#007FFF]/40 shadow-lg"
                             : "border-(--border-color) hover:border-[#007FFF]/25"
