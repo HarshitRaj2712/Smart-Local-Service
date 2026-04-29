@@ -30,26 +30,26 @@ const Chats = () => {
   }, [token]);
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] px-4 py-24">
-      <div className="max-w-5xl mx-auto bg-white rounded-2xl border border-[#e7f0fb] shadow-sm p-5 md:p-7">
+    <div className="min-h-screen bg-(--bg-main) px-4 py-24 transition-colors duration-200">
+      <div className="max-w-5xl mx-auto bg-(--bg-surface) rounded-2xl border border-(--border-color) shadow-sm p-5 md:p-7">
         <div className="mb-5">
-          <h1 className="text-2xl font-bold text-[#1b2a41]">Chats</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-(--text-main)">Chats</h1>
+          <p className="text-sm text-(--text-muted) mt-1">
             All user/provider conversations in one place.
           </p>
         </div>
 
         {loading ? (
-          <p className="text-gray-500">Loading chats...</p>
+          <p className="text-(--text-muted)">Loading chats...</p>
         ) : conversations.length === 0 ? (
-          <p className="text-gray-500">No chats yet.</p>
+          <p className="text-(--text-muted)">No chats yet.</p>
         ) : (
           <div className="space-y-3">
             {conversations.map((chat) => (
               <button
                 key={chat.bookingId}
                 onClick={() => navigate(`/chat/${chat.bookingId}`)}
-                className="w-full text-left rounded-xl border border-gray-100 hover:border-[#d7e9ff] bg-white hover:bg-[#f8fbff] p-4 transition-all"
+                className="w-full text-left rounded-xl border border-(--border-color) hover:border-[#007FFF] bg-(--bg-muted) hover:bg-(--bg-surface) p-4 transition-all"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
@@ -58,21 +58,21 @@ const Chats = () => {
                     </div>
 
                     <div className="min-w-0">
-                      <p className="font-bold text-sm text-gray-900 truncate">
+                      <p className="font-bold text-sm text-(--text-main) truncate">
                         {chat.counterpart?.name || "Unknown user"}
                       </p>
-                      <p className="text-xs text-gray-500 capitalize">
+                      <p className="text-xs text-(--text-muted) capitalize">
                         {chat.counterpart?.role || "user"} • {chat.serviceType}
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-xs text-gray-400 whitespace-nowrap">
+                  <p className="text-xs text-(--text-muted) whitespace-nowrap">
                     {new Date(chat.latestMessageAt).toLocaleDateString()}
                   </p>
                 </div>
 
-                <p className="text-sm text-gray-600 mt-2 truncate">
+                <p className="text-sm text-(--text-muted) mt-2 truncate">
                   {chat.latestMessage}
                 </p>
               </button>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import API from "../api/axios";
+import { getThemeTokens, useThemeMode } from "../utils/theme";
 
 import {
   Chart as ChartJS,
@@ -26,6 +27,8 @@ ChartJS.register(
 const ProviderAnalytics = () => {
   const { token } = useSelector((state) => state.auth);
   const [stats, setStats] = useState(null);
+  const theme = useThemeMode();
+  const chartTheme = getThemeTokens();
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -75,8 +78,48 @@ const ProviderAnalytics = () => {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: chartTheme.text,
+        },
+      },
+      tooltip: {
+        backgroundColor: chartTheme.surface,
+        titleColor: chartTheme.text,
+        bodyColor: chartTheme.text,
+        borderColor: chartTheme.border,
+        borderWidth: 1,
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: chartTheme.muted,
+        },
+        grid: {
+          color: chartTheme.border,
+        },
+      },
+      y: {
+        ticks: {
+          color: chartTheme.muted,
+        },
+        grid: {
+          color: chartTheme.border,
+        },
+      },
+    },
+  };
+
   return (
-    <div className="max-w-6xl mx-auto p-6 min-h-screen bg-(--bg-main) transition-colors duration-200">
+    <div
+      key={theme}
+      className="max-w-6xl mx-auto p-6 min-h-screen bg-(--bg-main) transition-colors duration-200"
+    >
       <h2 className="text-3xl font-bold mb-8 text-center text-(--text-main)">
         Provider Analytics
       </h2>
@@ -122,18 +165,22 @@ const ProviderAnalytics = () => {
 
       <div className="grid md:grid-cols-2 gap-8">
 
-        <div className="bg-white p-6 rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4">
+        <div className="bg-(--bg-surface) border border-(--border-color) p-6 rounded-xl shadow-md">
+          <h3 className="text-lg font-semibold mb-4 text-(--text-main)">
             Booking Distribution
           </h3>
-          <Pie data={pieData} />
+          <div className="h-72">
+            <Pie data={pieData} options={chartOptions} />
+          </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4">
+        <div className="bg-(--bg-surface) border border-(--border-color) p-6 rounded-xl shadow-md">
+          <h3 className="text-lg font-semibold mb-4 text-(--text-main)">
             Performance Metrics
           </h3>
-          <Bar data={barData} />
+          <div className="h-72">
+            <Bar data={barData} options={chartOptions} />
+          </div>
         </div>
 
       </div>

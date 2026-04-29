@@ -99,10 +99,10 @@ const Notifications = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] px-4 py-24">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#e7f0fb] shadow-sm p-5 md:p-7">
+    <div className="min-h-screen bg-(--bg-main) px-4 py-24 transition-colors duration-200">
+      <div className="max-w-4xl mx-auto bg-(--bg-surface) rounded-2xl border border-(--border-color) shadow-sm p-5 md:p-7">
         <div className="flex items-center justify-between mb-5">
-          <h1 className="text-2xl font-bold text-[#1b2a41]">
+          <h1 className="text-2xl font-bold text-(--text-main)">
             All Messages
           </h1>
           <button
@@ -113,27 +113,27 @@ const Notifications = () => {
           </button>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-(--text-muted) mb-4">
           Unread: {unreadCount}
         </p>
 
         {loading ? (
-          <p className="text-gray-500">Loading...</p>
+          <p className="text-(--text-muted)">Loading...</p>
         ) : notifications.length === 0 ? (
-          <p className="text-gray-500">No messages yet.</p>
+          <p className="text-(--text-muted)">No messages yet.</p>
         ) : (
           <div className="space-y-3">
             {notifications.map((item) => (
               <div
                 key={item._id}
-                className="rounded-xl border p-4 bg-blue-50 border-blue-100"
+                className="rounded-xl border p-4 bg-(--bg-muted) border-(--border-color)"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="font-bold text-sm text-gray-800">
+                    <p className="font-bold text-sm text-(--text-main)">
                       {item.title}
                     </p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-(--text-muted) mt-1">
                       {item.body}
                     </p>
                   </div>

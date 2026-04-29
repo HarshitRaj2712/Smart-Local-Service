@@ -20,6 +20,7 @@ import {
 } from "chart.js";
 
 import { Bar } from "react-chartjs-2";
+import { getThemeTokens, useThemeMode } from "../utils/theme";
 
 ChartJS.register(
   CategoryScale,
@@ -34,6 +35,8 @@ const AdminDashboard = () => {
 
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
+  const theme = useThemeMode();
+  const chartTheme = getThemeTokens();
 
   const [stats, setStats] = useState(null);
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
@@ -84,13 +87,50 @@ const AdminDashboard = () => {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: chartTheme.text,
+        },
+      },
+      tooltip: {
+        backgroundColor: chartTheme.surface,
+        titleColor: chartTheme.text,
+        bodyColor: chartTheme.text,
+        borderColor: chartTheme.border,
+        borderWidth: 1,
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: chartTheme.muted,
+        },
+        grid: {
+          color: chartTheme.border,
+        },
+      },
+      y: {
+        ticks: {
+          color: chartTheme.muted,
+        },
+        grid: {
+          color: chartTheme.border,
+        },
+      },
+    },
+  };
+
   const accountAge = Math.floor(
     (new Date() - new Date(user.createdAt)) /
       (1000 * 60 * 60 * 24)
   );
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] pb-20">
+    <div key={theme} className="min-h-screen bg-(--bg-main) pb-20">
       <div className="max-w-6xl mx-auto p-6 space-y-10">
 
         {/* ================= HEADER ================= */}
@@ -99,7 +139,7 @@ const AdminDashboard = () => {
             Welcome Admin,
             <span className="text-[#007FFF]"> {user.name}</span>
           </h1>
-          <p className="text-gray-400 text-xs uppercase tracking-widest mt-2">
+          <p className="text-(--text-muted) text-xs uppercase tracking-widest mt-2">
             Platform Control Center
           </p>
         </div>
@@ -129,11 +169,13 @@ const AdminDashboard = () => {
         </div>
 
         {/* ================= CHART ================= */}
-        <div className="bg-white p-8 rounded-[32px] shadow-md">
-          <h3 className="text-lg font-bold mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-color) p-8 rounded-4xl shadow-md">
+          <h3 className="text-lg font-bold mb-6 text-(--text-main)">
             Monthly Revenue Analytics
           </h3>
-          <Bar data={chartData} />
+          <div className="h-80">
+            <Bar data={chartData} options={chartOptions} />
+          </div>
         </div>
 
         {/* ================= GROWTH CARDS ================= */}
@@ -141,7 +183,7 @@ const AdminDashboard = () => {
           {monthlyRevenue.map((item, i) => (
             <div
               key={i}
-              className="bg-white p-6 rounded-[28px] shadow-sm text-center"
+              className="bg-(--bg-surface) border border-(--border-color) p-6 rounded-[28px] shadow-sm text-center"
             >
               <p className="font-semibold">
                 {item.year}-{item.month}
@@ -165,20 +207,20 @@ const AdminDashboard = () => {
         </div>
 
         {/* ================= LEADERBOARD ================= */}
-        <div className="bg-white p-8 rounded-[32px] shadow-md">
-          <h3 className="text-xl font-bold mb-6">
+        <div className="bg-(--bg-surface) border border-(--border-color) p-8 rounded-4xl shadow-md">
+          <h3 className="text-xl font-bold mb-6 text-(--text-main)">
             🏆 Top Providers
           </h3>
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-100">
+              <thead className="bg-(--bg-muted)">
                 <tr>
-                  <th className="p-3 text-left">Rank</th>
-                  <th className="p-3 text-left">Name</th>
-                  <th className="p-3 text-left">Earnings</th>
-                  <th className="p-3 text-left">Trust</th>
-                  <th className="p-3 text-left">Completed</th>
+                  <th className="p-3 text-left text-(--text-main)">Rank</th>
+                  <th className="p-3 text-left text-(--text-main)">Name</th>
+                  <th className="p-3 text-left text-(--text-main)">Earnings</th>
+                  <th className="p-3 text-left text-(--text-main)">Trust</th>
+                  <th className="p-3 text-left text-(--text-main)">Completed</th>
                 </tr>
               </thead>
 
@@ -186,17 +228,17 @@ const AdminDashboard = () => {
                 {leaderboard.map((p) => (
                   <tr
                     key={p.rank}
-                    className="border-b hover:bg-gray-50"
+                    className="border-b border-(--border-color) hover:bg-(--bg-muted)"
                   >
                     <td className="p-3 font-bold">#{p.rank}</td>
-                    <td className="p-3">{p.name}</td>
+                    <td className="p-3 text-(--text-main)">{p.name}</td>
                     <td className="p-3 text-green-600 font-semibold">
                       ₹{p.totalEarnings}
                     </td>
                     <td className="p-3 text-blue-600">
                       {p.trustScore?.toFixed(0)}
                     </td>
-                    <td className="p-3">
+                    <td className="p-3 text-(--text-main)">
                       {p.completedBookings}
                     </td>
                   </tr>
@@ -236,7 +278,7 @@ const AdminDashboard = () => {
           <div className="flex justify-end mt-10">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 bg-white border text-red-500 px-8 py-3 rounded-full font-bold hover:bg-red-500 hover:text-white transition"
+              className="flex items-center gap-3 bg-(--bg-surface) border border-(--border-color) text-red-500 px-8 py-3 rounded-full font-bold hover:bg-red-500 hover:text-white transition"
             >
               <LogOut size={18} />
               Sign Out
@@ -252,9 +294,9 @@ const AdminDashboard = () => {
 /* ================= HELPERS ================= */
 
 const StatCard = ({ icon, title, value, color }) => (
-  <div className="bg-white p-6 rounded-[28px] shadow-sm text-center">
+  <div className="bg-(--bg-surface) border border-(--border-color) p-6 rounded-[28px] shadow-sm text-center">
     <div className={`mx-auto mb-3 ${color}`}>{icon}</div>
-    <p className="text-gray-400 text-xs uppercase">{title}</p>
+    <p className="text-(--text-muted) text-xs uppercase">{title}</p>
     <h3 className={`text-2xl font-extrabold ${color}`}>
       {value}
     </h3>
@@ -262,11 +304,11 @@ const StatCard = ({ icon, title, value, color }) => (
 );
 
 const AccountCard = ({ icon, title, value }) => (
-  <div className="bg-white p-6 rounded-[28px] flex gap-4 items-center shadow-sm">
-    {icon}
+  <div className="bg-(--bg-surface) border border-(--border-color) p-6 rounded-[28px] flex gap-4 items-center shadow-sm">
+    <div className="text-[#007FFF]">{icon}</div>
     <div>
-      <p className="text-xs text-gray-400 uppercase">{title}</p>
-      <h3 className="text-lg font-bold">{value}</h3>
+      <p className="text-xs text-(--text-muted) uppercase">{title}</p>
+      <h3 className="text-lg font-bold text-(--text-main)">{value}</h3>
     </div>
   </div>
 );

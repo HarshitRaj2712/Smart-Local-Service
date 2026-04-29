@@ -27,6 +27,7 @@ import {
 
 import { Pie, Bar } from "react-chartjs-2";
 import { disconnectSocket } from "../utils/socket";
+import { getThemeTokens, useThemeMode } from "../utils/theme";
 
 ChartJS.register(
   ArcElement,
@@ -41,6 +42,8 @@ const ProviderDashboard = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
+  const theme = useThemeMode();
+  const chartTheme = getThemeTokens();
 
   const [bookings, setBookings] = useState([]);
   const [stats, setStats] = useState(null);
@@ -135,8 +138,48 @@ const ProviderDashboard = () => {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: chartTheme.text,
+        },
+      },
+      tooltip: {
+        backgroundColor: chartTheme.surface,
+        titleColor: chartTheme.text,
+        bodyColor: chartTheme.text,
+        borderColor: chartTheme.border,
+        borderWidth: 1,
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: chartTheme.muted,
+        },
+        grid: {
+          color: chartTheme.border,
+        },
+      },
+      y: {
+        ticks: {
+          color: chartTheme.muted,
+        },
+        grid: {
+          color: chartTheme.border,
+        },
+      },
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-(--bg-main) pb-16 transition-colors duration-200">
+    <div
+      key={theme}
+      className="min-h-screen bg-(--bg-main) pb-16 transition-colors duration-200"
+    >
       <div className="max-w-6xl mx-auto p-6 space-y-8">
 
         {/* EMAIL VERIFY */}
@@ -234,11 +277,15 @@ const ProviderDashboard = () => {
 
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-(--bg-surface) p-6 rounded-xl border border-(--border-color)">
-                <Pie data={pieData} />
+                <div className="h-72">
+                  <Pie data={pieData} options={chartOptions} />
+                </div>
               </div>
 
               <div className="bg-(--bg-surface) p-6 rounded-xl border border-(--border-color)">
-                <Bar data={barData} />
+                <div className="h-72">
+                  <Bar data={barData} options={chartOptions} />
+                </div>
               </div>
             </div>
           </>

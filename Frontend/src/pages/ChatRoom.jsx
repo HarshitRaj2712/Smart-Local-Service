@@ -88,10 +88,10 @@ const ChatRoom = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF0F5] px-4 py-24">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md border border-[#e7f0fb]">
-        <div className="px-5 py-4 border-b flex items-center justify-between">
-          <h1 className="text-xl font-bold text-[#1b2a41]">Booking Chat</h1>
+    <div className="min-h-screen bg-(--bg-main) px-4 py-24 transition-colors duration-200">
+      <div className="max-w-3xl mx-auto bg-(--bg-surface) rounded-2xl shadow-md border border-(--border-color)">
+        <div className="px-5 py-4 border-b border-(--border-color) flex items-center justify-between">
+          <h1 className="text-xl font-bold text-(--text-main)">Booking Chat</h1>
           <button
             onClick={() => navigate(-1)}
             className="text-sm font-semibold text-[#007FFF]"
@@ -101,13 +101,13 @@ const ChatRoom = () => {
         </div>
 
         {loading ? (
-          <div className="p-6 text-gray-500">Loading messages...</div>
+          <div className="p-6 text-(--text-muted)">Loading messages...</div>
         ) : error ? (
           <div className="p-6 text-red-500">{error}</div>
         ) : (
-          <div className="h-[55vh] overflow-y-auto p-5 space-y-3 bg-[#f8fbff]">
+          <div className="h-[55vh] overflow-y-auto p-5 space-y-3 bg-(--bg-muted)">
             {messages.length === 0 ? (
-              <p className="text-gray-500 text-sm">No messages yet. Say hello.</p>
+              <p className="text-(--text-muted) text-sm">No messages yet. Say hello.</p>
             ) : (
               messages.map((message) => {
                 const isMine = String(message.sender?._id) === String(user?.id);
@@ -121,13 +121,13 @@ const ChatRoom = () => {
                       className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm shadow-sm ${
                         isMine
                           ? "bg-[#007FFF] text-white rounded-br-md"
-                          : "bg-white text-gray-800 border border-gray-100 rounded-bl-md"
+                          : "bg-(--bg-surface) text-(--text-main) border border-(--border-color) rounded-bl-md"
                       }`}
                     >
                       <p>{message.message}</p>
                       <p
                         className={`mt-1 text-[10px] ${
-                          isMine ? "text-blue-100" : "text-gray-400"
+                          isMine ? "text-blue-100" : "text-(--text-muted)"
                         }`}
                       >
                         {new Date(message.createdAt).toLocaleTimeString([], {
@@ -148,7 +148,7 @@ const ChatRoom = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Type your message"
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2 outline-none focus:border-[#007FFF]"
+            className="flex-1 border border-(--border-color) rounded-xl px-4 py-2 outline-none bg-(--bg-surface) text-(--text-main) placeholder:text-(--text-muted) focus:border-[#007FFF]"
           />
           <button
             type="submit"
