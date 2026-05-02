@@ -32,6 +32,7 @@ import HowToFindAProPage from "./pages/footer-page/HowToFindAProPage";
 import ProviderVerificationPage from "./pages/footer-page/ProviderVerificationPage";
 import PrivacyPolicyPage from "./pages/footer-page/PrivacyPolicyPage";
 import TermsAndConditionsPage from "./pages/footer-page/TermsAndConditionsPage";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -158,6 +159,9 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
       </main>
